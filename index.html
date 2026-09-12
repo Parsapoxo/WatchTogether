@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Together</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="brandbar">
+    <svg class="lamps" viewBox="0 0 46 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line class="link-line" x1="14" y1="10" x2="32" y2="10" stroke="#93a0bd" stroke-width="1"/>
+      <circle class="halo" cx="8" cy="10" r="7" fill="#f2a541" fill-opacity="0.16"/>
+      <circle class="bulb" cx="8" cy="10" r="3.4" fill="#f2a541"/>
+      <circle class="halo right" cx="38" cy="10" r="7" fill="#5fb3a3" fill-opacity="0.16"/>
+      <circle class="bulb right" cx="38" cy="10" r="3.4" fill="#5fb3a3"/>
+    </svg>
+    <div>
+      <div class="brand-name">Together <span class="version-badge" id="versionBadge"></span></div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="card">
+      <h1>One video. Two of you.</h1>
+      <p class="lede">Add your name, then start a new room or join your friend's with a code.</p>
+
+      <div class="field">
+        <label for="nameInput">Your name</label>
+        <input id="nameInput" type="text" placeholder="e.g. Parsa" maxlength="20" />
+      </div>
+
+      <div class="tabs">
+        <div class="tab-indicator" id="tabIndicator"></div>
+        <div class="tab active" id="tabCreate">Start a room</div>
+        <div class="tab" id="tabJoin">Join a room</div>
+      </div>
+
+      <div id="createPane" class="pane">
+        <div class="field">
+          <label>Pick a video to watch</label>
+          <div class="video-list" id="videoList"></div>
+        </div>
+        <button class="btn btn-primary" id="createBtn">Start room</button>
+      </div>
+
+      <div id="joinPane" class="pane" style="display:none;">
+        <div class="field">
+          <label for="codeInput">Room code</label>
+          <input id="codeInput" type="text" placeholder="e.g. 7GK4Q" maxlength="6" style="text-transform:uppercase" />
+        </div>
+        <button class="btn btn-primary" id="joinBtn">Join</button>
+      </div>
+
+      <div class="error-text" id="errorText"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="videos.js"></script>
+  <script src="common.js"></script>
+  <script>
+    const nameInput = document.getElementById("nameInput");
+    const videoList = document.getElementById("videoList");
+    const errorText = document.getElementById("errorText");
+    const tabCreate = document.getElementById("tabCreate");
+    const tabJoin = document.getElementById("tabJoin");
+    const tabIndicator = document.getElementById("tabIndicator");
+    const createPane = document.getElementById("createPane");
+    const joinPane = document.getElementById("joinPane");
+    const codeInput = document.getElementById("codeInput");
+
+    applyVersionBadge();
+    nameInput.value = getMyName();
+
+    const videoElRefs = {};
+
+    VIDEO_LIST.forEach((v, i) => {
+      const label = document.createElement("label");
+      label.className = "video-option";
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "videoChoice";
+      input.value = v.id;
+      if (i === 0) input.checked = true;
+
+      const main = document.createElement("div");
+      main.className = "video-option-main";
+      const title = document.createElement("span");
+      title.textContent = v.title;
+      const pctLabel = document.createElement("span");
+      pctLabel.className = "video-option-pct";
+      pctLabel.textContent = "…";
+      main.appendChild(title);
+      main.appendChild(pctLabel);
+
+      const track = document.createElement("div");
+      track.className = "progress-track";
+      const fill = document.createElement("div");
+      fill.className = "progress-fill";
+      track.appendChild(fill);
+
+      label.appendChild(input);
+      label.appendChild(main);
+      label.appendChild(track);
+      videoList.appendChild(label);
+
+      videoElRefs[v.id] = { fill, pctLabel };
+    });
+
+    fetchProgressMap(VIDEO_LIST.map((v) => v.id)).then((progressMap) => {
+      VIDEO_LIST.forEach((v) => {
+        const pct = Math.round((progressMap[v.id] || 0) * 100);
+        videoElRefs[v.id].fill.style.width = pct + "%";
+        videoElRefs[v.id].pctLabel.textContent = pct + "%";
+      });
+    });
+
+    function getSelectedVideo() {
+      const checked = videoList.querySelector("input[name='videoChoice']:checked");
+      return VIDEO_LIST.find((v) => v.id === checked.value);
+    }
+
+    function showCreate() {
+      tabCreate.classList.add("active");
+      tabJoin.classList.remove("active");
+      tabIndicator.classList.remove("pos-1");
+      createPane.style.display = "block";
+      joinPane.style.display = "none";
+      errorText.textContent = "";
+    }
+
+    function showJoin() {
+      tabJoin.classList.add("active");
+      tabCreate.classList.remove("active");
+      tabIndicator.classList.add("pos-1");
+      joinPane.style.display = "block";
+      createPane.style.display = "none";
+      errorText.textContent = "";
+    }
+
+    tabCreate.addEventListener("click", showCreate);
+    tabJoin.addEventListener("click", showJoin);
+
+    function requireName() {
+      const name = nameInput.value.trim();
+      if (!name) {
+        errorText.textContent = "Enter your name first.";
+        nameInput.focus();
+        return null;
+      }
+      setMyName(name);
+      return name;
+    }
+
+    document.getElementById("createBtn").addEventListener("click", async () => {
+      const name = requireName();
+      if (!name) return;
+
+      const video = getSelectedVideo();
+
+      try {
+        const sb = initSupabase();
+        const roomCode = makeRoomCode();
+        const { error } = await sb.from("rooms").insert({
+          code: roomCode,
+          video: video
+        });
+        if (error) throw error;
+        window.location.href = "room.html?room=" + roomCode;
+      } catch (e) {
+        errorText.textContent = "Couldn't create the room. Check your Supabase config and database table (see README).";
+        console.error(e);
+      }
+    });
+
+    document.getElementById("joinBtn").addEventListener("click", async () => {
+      const name = requireName();
+      if (!name) return;
+
+      const code = codeInput.value.trim().toUpperCase();
+      if (!code) {
+        errorText.textContent = "Enter the room code.";
+        return;
+      }
+
+      try {
+        const sb = initSupabase();
+        const { data, error } = await sb.from("rooms").select("code").eq("code", code).maybeSingle();
+        if (error) throw error;
+        if (!data) {
+          errorText.textContent = "No room found with that code. Double-check it.";
+          return;
+        }
+        window.location.href = "room.html?room=" + code;
+      } catch (e) {
+        errorText.textContent = "Something went wrong. Check your Supabase config and database table (see README).";
+        console.error(e);
+      }
+    });
+
+    // Support a direct link like index.html?room=XXXX that jumps straight to the join tab
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("room")) {
+      showJoin();
+      codeInput.value = params.get("room").toUpperCase();
+    }
+  </script>
+</body>
+</html>
