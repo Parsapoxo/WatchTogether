@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watch room</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="brandbar">
+    <svg class="lamps" viewBox="0 0 46 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line class="link-line" x1="14" y1="10" x2="32" y2="10" stroke="#93a0bd" stroke-width="1"/>
+      <circle class="halo" cx="8" cy="10" r="7" fill="#f2a541" fill-opacity="0.16"/>
+      <circle class="bulb" cx="8" cy="10" r="3.4" fill="#f2a541"/>
+      <circle class="halo right" cx="38" cy="10" r="7" fill="#5fb3a3" fill-opacity="0.16"/>
+      <circle class="bulb right" cx="38" cy="10" r="3.4" fill="#5fb3a3"/>
+    </svg>
+    <div>
+      <div class="brand-name">Together <span class="version-badge" id="versionBadge"></span></div>
+    </div>
+  </div>
+
+  <div class="room-wrap">
+    <div class="room-top">
+      <div class="room-title" id="videoTitle">Loading...</div>
+      <div class="people" id="peopleList"></div>
+    </div>
+
+    <div class="episode-nav">
+      <button class="btn btn-ghost" id="prevBtn">← Previous</button>
+      <span class="episode-nav-label" id="episodeNavLabel"></span>
+      <button class="btn btn-ghost" id="nextBtn">Next →</button>
+    </div>
+
+    <div class="player-frame" id="playerFrame">
+      <video id="player" controls playsinline></video>
+    </div>
+
+    <div class="status-bar">
+      <span id="statusText"></span>
+      <span id="liveIndicator"></span>
+    </div>
+
+    <div class="copy-row">
+      <button class="btn btn-ghost" id="copyBtn">Copy episode link</button>
+      <button class="btn btn-ghost" id="homeBtn">Back to episodes</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="videos.js"></script>
+  <script src="common.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const videoId = params.get("video");
+    const myName = getMyName();
+    const myClientId = getMyClientId();
+
+    const video = VIDEO_LIST.find((v) => v.id === videoId);
+
+    if (!video || !myName) {
+      window.location.href = "index.html" + (videoId ? "?video=" + videoId : "");
+    }
+
+    applyVersionBadge();
+
+    const sb = initSupabase();
+    const player = document.getElementById("player");
+    const playerFrame = document.getElementById("playerFrame");
+    const statusText = document.getElementById("statusText");
+    const liveIndicator = document.getElementById("liveIndicator");
+    const peopleList = document.getElementById("peopleList");
+    const toast = document.getElementById("toast");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const episodeNavLabel = document.getElementById("episodeNavLabel");
+
+    let sessionMaxFraction = 0;
+    let progressReady = false;
+
+    let applyingRemote = false;
+    const SEEK_TOLERANCE = 1.2; // seconds - below this gap, no need to re-sync
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function flashSynced() {
+      playerFrame.classList.add("synced");
+      setTimeout(() => playerFrame.classList.remove("synced"), 500);
+    }
+
+    // --- set up this episode ---
+    document.getElementById("videoTitle").textContent = video.title;
+    player.src = video.url;
+
+    fetchProgressMap([video.id]).then((map) => {
+      sessionMaxFraction = map[video.id] || 0;
+      progressReady = true;
+    });
+
+    const idx = VIDEO_LIST.findIndex((v) => v.id === video.id);
+    prevBtn.disabled = idx <= 0;
+    nextBtn.disabled = idx === -1 || idx >= VIDEO_LIST.length - 1;
+    episodeNavLabel.textContent = idx !== -1 ? "Episode " + (idx + 1) + " of " + VIDEO_LIST.length : "";
+
+    prevBtn.addEventListener("click", () => {
+      if (idx > 0) window.location.href = "room.html?video=" + VIDEO_LIST[idx - 1].id;
+    });
+    nextBtn.addEventListener("click", () => {
+      if (idx !== -1 && idx < VIDEO_LIST.length - 1) window.location.href = "room.html?video=" + VIDEO_LIST[idx + 1].id;
+    });
+
+    // --- realtime channel for this episode (playback events + who's watching) ---
+    // everyone watching the same episode shares this channel; other episodes are independent
+    const channel = sb.channel("episode:" + video.id, {
+      config: {
+        broadcast: { self: false },
+        presence: { key: myClientId }
+      }
+    });
+
+    channel.on("broadcast", { event: "playback" }, (msg) => {
+      const p = msg.payload;
+      applyingRemote = true;
+      flashSynced();
+
+      if (Math.abs(player.currentTime - p.time) > SEEK_TOLERANCE) {
+        player.currentTime = p.time;
+      }
+
+      if (p.action === "play") {
+        player.play().catch(() => {});
+        statusText.textContent = "Your friend hit play";
+      } else if (p.action === "pause") {
+        player.pause();
+        statusText.textContent = "Your friend paused";
+      } else if (p.action === "seek") {
+        statusText.textContent = "Your friend jumped to a new spot";
+      }
+
+      setTimeout(() => { applyingRemote = false; }, 400);
+    });
+
+    channel.on("presence", { event: "sync" }, () => {
+      const state = channel.presenceState();
+      peopleList.innerHTML = "";
+      const ids = Object.keys(state);
+      const othersCount = ids.length - 1;
+
+      ids.forEach((id) => {
+        const info = state[id][0];
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        const dot = document.createElement("span");
+        dot.className = "dot" + (id === myClientId ? " me" : "") + (othersCount > 0 ? " live" : "");
+        chip.appendChild(dot);
+        chip.appendChild(document.createTextNode(info.name + (id === myClientId ? " (you)" : "")));
+        peopleList.appendChild(chip);
+      });
+
+      liveIndicator.textContent = othersCount > 0 ? "Your friend is here ●" : "Watching alone for now";
+      liveIndicator.className = othersCount > 0 ? "live" : "";
+    });
+
+    channel.subscribe(async (status) => {
+      if (status === "SUBSCRIBED") {
+        await channel.track({ name: myName });
+      }
+    });
+
+    function sendPlayback(action) {
+      if (applyingRemote) return;
+      channel.send({
+        type: "broadcast",
+        event: "playback",
+        payload: { action: action, time: player.currentTime }
+      });
+    }
+
+    player.addEventListener("play", () => sendPlayback("play"));
+    player.addEventListener("pause", () => sendPlayback("pause"));
+    player.addEventListener("seeked", () => sendPlayback("seek"));
+
+    // when a video truly finishes, mark it as fully watched (avoids rounding gaps
+    // between the last timeupdate and the real end of the video)
+    player.addEventListener("ended", () => {
+      sessionMaxFraction = 1;
+      saveSharedProgress(video.id, 1);
+    });
+
+    // --- save watch progress, shared with your friend, so the home page can show it ---
+    let lastProgressSave = 0;
+    function maybeSaveProgress(force) {
+      if (!progressReady || !player.duration) return;
+      const frac = player.currentTime / player.duration;
+      if (frac <= sessionMaxFraction) return;
+      const now = Date.now();
+      if (!force && now - lastProgressSave < 4000) return;
+      lastProgressSave = now;
+      sessionMaxFraction = frac;
+      saveSharedProgress(video.id, frac);
+    }
+    player.addEventListener("timeupdate", () => maybeSaveProgress(false));
+    player.addEventListener("pause", () => maybeSaveProgress(true));
+    window.addEventListener("beforeunload", () => maybeSaveProgress(true));
+
+    // --- buttons ---
+    document.getElementById("copyBtn").addEventListener("click", () => {
+      const link = window.location.origin + window.location.pathname + "?video=" + video.id;
+      navigator.clipboard.writeText(link).then(() => showToast("Link copied ✓"));
+    });
+
+    document.getElementById("homeBtn").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
