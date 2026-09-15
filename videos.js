@@ -210,7 +210,7 @@ const VIDEO_LIST = [
   },
   {
     id: "py-69",
-    title: "69 - Python Lambda (Part 3)",
+    title: "69 - Python Map Function",
     section: "beginner",
     url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/b2a3921d-8d1b-498d-b08e-043f2eccabf4/69_pythonmapfunction.mp4"
   }
