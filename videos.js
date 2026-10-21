@@ -2,7 +2,8 @@
 // (including episodes not added to VIDEO_LIST yet).
 const SECTIONS = [
   { id: "beginner", title: "Beginner", totalEpisodes: 107 },
-  { id: "advanced", title: "Advanced", totalEpisodes: 45 }
+  { id: "advanced", title: "Advanced", totalEpisodes: 45 },
+  { id: "regularshow", title: "RegularShow", totalEpisodes: 244 }
 ];
 
 // The list of videos people can pick from.
@@ -213,5 +214,11 @@ const VIDEO_LIST = [
     title: "69 - Python Map Function",
     section: "beginner",
     url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/b2a3921d-8d1b-498d-b08e-043f2eccabf4/69_pythonmapfunction.mp4"
+  },
+  {
+    id: "reg1",
+    title: "Season 1 - Episode 1",
+    section: "regularshow",
+    url: "https://dl1.tcenteri.ir/stream_serials2/stream6/Regular.Show.2009/S01/1080p/Regular.Show.S01E01.1080p.BluRay.mp4"
   }
 ];
