@@ -3,7 +3,8 @@
 const SECTIONS = [
   { id: "beginner", title: "Beginner", totalEpisodes: 107 },
   { id: "advanced", title: "Advanced", totalEpisodes: 45 },
-  { id: "regularshow", title: "RegularShow", totalEpisodes: 244 }
+  { id: "regularshow", title: "RegularShow", totalEpisodes: 244 },
+  { id: "git", title: "Git", totalEpisodes: 12 }
 ];
 
 // The list of videos people can pick from.
@@ -220,5 +221,29 @@ const VIDEO_LIST = [
     title: "Season 1 - Episode 1",
     section: "regularshow",
     url: "https://dl1.tcenteri.ir/stream_serials2/stream6/Regular.Show.2009/S01/1080p/Regular.Show.S01E01.1080p.BluRay.mp4"
+  },
+    {
+    id: "git1",
+    title: "Reviewing Git and Installing It on Windows",
+    section: "git",
+    url: "https://dl.codeyad.com/videos/Courses/40aa9afb-10a5-4533-9922-f33ecccdf7f6/Episodes/f5492cd1-557b-4d40-ada9-bbf777700e52/1_install.mp4"
+  },
+    {
+    id: "git2",
+    title: "Examining Git Structure | Creating a New Repository",
+    section: "git",
+    url: "https://dl.codeyad.com/videos/Courses/40aa9afb-10a5-4533-9922-f33ecccdf7f6/Episodes/f375103f-37c7-4cb4-bb63-816dc8bcfb3e/2_git-structure.mp4"
+  },
+    {
+    id: "git3",
+    title: "Exploring Branches | Working with Branch-Related Commands",
+    section: "git",
+    url: "https://dl.codeyad.com/videos/Courses/40aa9afb-10a5-4533-9922-f33ecccdf7f6/Episodes/6d7eaa47-bfcf-4f88-aa1c-1e2936cd7877/3_branch.mp4"
+  },
+    {
+    id: "git4",
+    title: "Reviewing and creating a .gitignore file",
+    section: "git",
+    url: "https://dl.codeyad.com/videos/Courses/40aa9afb-10a5-4533-9922-f33ecccdf7f6/Episodes/4af4034d-4076-476c-9880-47a38a5211bc/4_git-ignore.mp4"
   }
 ];
