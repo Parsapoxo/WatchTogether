@@ -91,7 +91,7 @@ Open `videos.js` and add your video links, following the same shape as the exist
 
 ## Usage
 
-1. Open the site, enter your name, pick a section, then an episode from its list, and click "Start".
+1. Open the site and enter your name (top corner). Click "Continue" to jump straight to your next episode, or pick a section, choose an episode from its list, and click "Start watching".
 2. You're taken straight to that episode's watch page. If your friend opens the site and picks the same episode (or opens the "Copy episode link" you send them), you'll both land in the same space and stay in sync — play, pause, and seek follow each other.
 3. Inside the watch page, "Previous"/"Next" (in the player's control bar) moves *you* to the next episode, without affecting your friend if they're somewhere else — just like switching voice channels.
 4. Use the chat sidebar next to the video, or the quick emoji reactions in the player, to react in real time — chat messages also pop up briefly over the video itself.

@@ -8,6 +8,14 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [2.6.0]
+
+### Changed
+- Watch page: the whole page now fits the screen with no vertical scrolling. "Copy episode link" and "Back to episodes" moved up into a compact header next to the title and who's watching. The video box now fills all the remaining height and width, and the chat sidebar is exactly the same height as the video box. Status messages ("Your friend paused", buffering notices) now appear as a small pill on top of the video and fade away on their own.
+- "Back to episodes" now returns you to the section's episode list with the episode you were watching already selected.
+- Home page fully redesigned: a big welcome with an animated pair of lamps, a "Continue watching" card that takes you to your next episode in one click, live stats (episodes finished, % of the course, episodes to go), and large section cards with animated progress rings. Opening a section shows its episodes as cards (number, title, progress bar), with search, and a "Start watching" bar once you pick one (double-clicking an episode starts it right away). Your name moved to a small field in the top corner; if it's empty when you press start, the field shakes and asks for it.
+- Episodes whose titles don't start with a number (e.g. in the Git section) now show their position in the section on their card instead of a bullet.
+
 ## [2.5.0]
 
 ### Changed
