@@ -8,6 +8,14 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [2.7.0]
+
+### Changed
+- The watch page now shares the home page's look: the same soft amber/teal glow in the background, a rounded video box with a deeper shadow, a glass-style chat sidebar (with a live dot, softer message bubbles, and a pill-shaped send button), pill-shaped header buttons, and a gentle fade-in on load. The episode number now sits in the same amber tile used on the home page, with the rest of the title next to it.
+
+### Fixed
+- The home page showed a vertical scrollbar with empty space at the bottom even when everything fit on screen. The extra bottom space (reserved for the "Start watching" bar) is now only added inside a section's episode list, where that bar actually appears.
+
 ## [2.6.0]
 
 ### Changed

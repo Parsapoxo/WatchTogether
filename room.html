@@ -21,11 +21,14 @@
     </div>
 
     <div class="room-heading">
-      <div class="room-title" id="videoTitle">Loading...</div>
-      <div class="room-subline">
-        <span id="episodeNavLabel"></span>
-        <span>·</span>
-        <span id="liveIndicator"></span>
+      <div class="room-ep" id="roomEp"></div>
+      <div class="room-heading-text">
+        <div class="room-title" id="videoTitle">Loading...</div>
+        <div class="room-subline">
+          <span id="episodeNavLabel"></span>
+          <span>·</span>
+          <span id="liveIndicator"></span>
+        </div>
       </div>
     </div>
 
@@ -181,7 +184,11 @@
     }
 
     // --- set up this episode ---
-    document.getElementById("videoTitle").textContent = video.title;
+    // the number goes in the amber tile (same as on the home page), the rest is the title
+    const epMatch = video.title.match(/^(\d+)/);
+    const sectionVideos = VIDEO_LIST.filter((v) => v.section === video.section);
+    document.getElementById("roomEp").textContent = epMatch ? epMatch[1] : String(sectionVideos.indexOf(video) + 1);
+    document.getElementById("videoTitle").textContent = video.title.replace(/^\d+\s*[-–—:]\s*/, "");
     player.src = video.url;
 
     fetchProgressMap([video.id]).then((map) => {
