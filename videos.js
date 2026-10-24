@@ -305,6 +305,82 @@ const COURSES = [
         ]
       }
     ]
+  },
+  {
+    id: "chatgpt",
+    title: "ChatGPT",
+    logo: "assets/chatgpt.svg",
+    sections: [
+      {
+        id: "chatgpt-intro",
+        title: "An Initial Introduction to ChatGPT",
+        totalEpisodes: 9,
+        episodes: [
+        {
+          id: "chatgpt1",
+          title: "An Introduction to ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/23e20288-b0f8-45d1-8194-ef693c45fcef/S1-E1_getting-started-with-chatgpt.mp4"
+        },
+        {
+          id: "chatgpt2",
+          title: "Initial settings for getting started with ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/67511650-6d56-4034-b02d-b242ccadc1e6/S1-E2_initial-setup-for-using-chatgpt.mp4"
+        },
+        {
+          id: "chatgpt3",
+          title: "Fundamentals of Prompt Engineering",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/3f6cd4b5-2467-43e8-92cd-ad0d7c58a872/S1-E3_fundamentals-of-prompt-writing.mp4"
+        },
+        {
+          id: "chatgpt4",
+          title: "Analyzing images and files with ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/1c08724f-0ec3-487f-bbda-45cc067b675e/S1-E4_analyze-images-and-files-with-chatgpt.mp4"
+        },
+        {
+          id: "chatgpt5",
+          title: "Learning with ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/b4250c39-a62a-4121-81ce-d81d7dc23c85/S1-E5_learn-with-chatgpt.mp4"
+        },
+        {
+          id: "chatgpt6",
+          title: "How to Create Images with ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/17e28ccd-9420-4d8b-a437-a523b68be6e0/S1-E6_image-chatgpt.mp4"
+        },
+        {
+          id: "chatgpt7",
+          title: "Web Search in ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/627571d1-4161-46bf-ac72-1ecaae1af364/S1-E7_web-search.mp4"
+        },
+        {
+          id: "chatgpt8",
+          title: "Deep Research",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/9e4029dc-6dc6-4589-9058-fce31e3b473c/S1-E8_deep-research.mp4"
+        },
+        {
+          id: "chatgpt9",
+          title: "Canvas in ChatGPT",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/ab6b8ea6-574d-4638-aa40-44d7a5fc1ebe/S1-E9_canvas.mp4"
+        }
+        ]
+      },
+      {
+        id: "chatgpt-prompting",
+        title: "Advanced Prompt Engineering Skills",
+        totalEpisodes: 2,
+        episodes: [
+        {
+          id: "chatgpt10",
+          title: "Types of prompts",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/ea6ed34d-7428-4f64-842e-2bdd36cb66b1/S2-E1_prompt-type.mp4"
+        },
+        {
+          id: "chatgpt11",
+          title: "Anatomy of a Professional Prompt",
+          url: "https://dl.codeyad.com/videos/Courses/c42c3fe0-ea53-42b7-a183-b4893f91b9da/Episodes/2099c1f2-04cb-41d4-b715-93398aa0416e/S2-E2_anatomy-prompt.mp4"
+        }
+        ]
+      }
+    ]
   }
 ];
 

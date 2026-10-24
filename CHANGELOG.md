@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.1.0]
+
+### Added
+- The ChatGPT course, with its logo: two sections ("An Initial Introduction to ChatGPT" with 9 episodes and "Advanced Prompt Engineering Skills" with 2 episodes), taken from the course document. The logo was recoloured to the site's light text colour so it stays visible on the dark theme.
+
 ## [3.0.0]
 
 ### Changed
