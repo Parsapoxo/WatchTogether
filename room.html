@@ -185,10 +185,8 @@
 
     // --- set up this episode ---
     // the number goes in the amber tile (same as on the home page), the rest is the title
-    const epMatch = video.title.match(/^(\d+)/);
-    const sectionVideos = VIDEO_LIST.filter((v) => v.section === video.section);
-    document.getElementById("roomEp").textContent = epMatch ? epMatch[1] : String(sectionVideos.indexOf(video) + 1);
-    document.getElementById("videoTitle").textContent = video.title.replace(/^\d+\s*[-–—:]\s*/, "");
+    document.getElementById("roomEp").textContent = episodeNumber(video);
+    document.getElementById("videoTitle").textContent = episodeName(video);
     player.src = video.url;
 
     fetchProgressMap([video.id]).then((map) => {
@@ -382,18 +380,27 @@
       sendChatMessage(video.id, myClientId, myName, text);
     });
 
-    const idx = VIDEO_LIST.findIndex((v) => v.id === video.id);
-    prevBtn.disabled = idx <= 0;
-    nextBtn.disabled = idx === -1 || idx >= VIDEO_LIST.length - 1;
-    episodeNavLabel.textContent = idx !== -1 ? "Episode " + (idx + 1) + " of " + VIDEO_LIST.length : "";
-    if (idx > 0) prevBtn.title = "Previous: " + VIDEO_LIST[idx - 1].title;
-    if (idx !== -1 && idx < VIDEO_LIST.length - 1) nextBtn.title = "Next: " + VIDEO_LIST[idx + 1].title;
+    // Previous/Next walk through the episodes of this course (across its sections),
+    // and never jump into a different course
+    const courseVideos = VIDEO_LIST.filter((v) => v.course === video.course);
+    const idx = courseVideos.findIndex((v) => v.id === video.id);
+    const prevVideo = idx > 0 ? courseVideos[idx - 1] : null;
+    const nextVideo = idx !== -1 && idx < courseVideos.length - 1 ? courseVideos[idx + 1] : null;
+
+    prevBtn.disabled = !prevVideo;
+    nextBtn.disabled = !nextVideo;
+    if (prevVideo) prevBtn.title = "Previous: " + episodeName(prevVideo);
+    if (nextVideo) nextBtn.title = "Next: " + episodeName(nextVideo);
+
+    const courseOfVideo = COURSE_BY_ID[video.course];
+    const sectionOfVideo = SECTION_BY_ID[video.section];
+    episodeNavLabel.textContent = (courseOfVideo ? courseOfVideo.title : "") + (sectionOfVideo ? " · " + sectionOfVideo.title : "");
 
     prevBtn.addEventListener("click", () => {
-      if (idx > 0) window.location.href = "room.html?video=" + VIDEO_LIST[idx - 1].id;
+      if (prevVideo) window.location.href = "room.html?video=" + encodeURIComponent(prevVideo.id);
     });
     nextBtn.addEventListener("click", () => {
-      if (idx !== -1 && idx < VIDEO_LIST.length - 1) window.location.href = "room.html?video=" + VIDEO_LIST[idx + 1].id;
+      if (nextVideo) window.location.href = "room.html?video=" + encodeURIComponent(nextVideo.id);
     });
 
     // --- realtime channel for this episode (playback events + who's watching) ---

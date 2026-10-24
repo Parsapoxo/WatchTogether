@@ -6,7 +6,7 @@ A site for you and a friend to watch a video at the same time — when one of yo
 
 - Videos aren't uploaded to the site; only their direct links (in `videos.js`) are used.
 - Each episode is its own fixed, always-on space — like a voice channel in Discord. There's no "create a room" or "room code" step: you just pick an episode and go. If your friend picks the same episode, you're automatically in sync together there; different episodes stay completely independent.
-- Episodes are grouped into sections (e.g. Beginner/Advanced); the panel shows sections first, each with its own progress bar, and opens into that section's episode list.
+- Everything is organised as **Course → Section → Episode** (for example Python → Beginner → 1 - Installing Python). The home page shows the courses (each with its logo and a progress ring), a course opens into its sections, and a section opens into its episodes.
 - To pass playback messages between the two browsers instantly, this uses **Supabase Realtime** — a free service that works from anywhere without a VPN.
 - A small database table stores shared watch progress, so both of you see the same percentage for each episode.
 - The video player is fully custom-built (no browser default controls), with Previous/Next, quick emoji reactions, and a chat panel — messages also pop up briefly over the video itself.
@@ -81,17 +81,21 @@ These are the only two tables the site needs. (An earlier version of this projec
 
 ## Step 4: Adding videos
 
-Open `videos.js` and add your video links, following the same shape as the existing entries.
+Everything the site can play is described in `videos.js`, and the comment at the top of that file explains the three things you can add:
+
+- **An episode:** add an `{ id, title, url }` block to the `episodes` list of the right section. The `id` must be unique and must never change afterwards (progress and chat are saved under it). A title that starts with a number (`"40 - Training"`) shows that number on its tile; titles without one are numbered by their position inside the course.
+- **A section:** add `{ id, title, totalEpisodes, episodes: [] }` to a course's `sections`. `totalEpisodes` is how many episodes the section has in total, including ones you haven't added yet; progress is measured against it.
+- **A course:** add `{ id, title, logo, sections: [...] }` to `COURSES` and put its logo image in the `assets` folder (e.g. `assets/python.webp`). Without a logo, the course shows its first letter.
 
 ## Step 5: Upload to GitHub and turn on GitHub Pages
 
-1. Create a new repository and push all the files in this folder (`index.html`, `room.html`, `style.css`, `common.js`, `videos.js`, `supabase-config.js`).
+1. Create a new repository and push all the files in this folder (`index.html`, `room.html`, `style.css`, `common.js`, `videos.js`, `supabase-config.js`, and the `assets` folder with the course logos).
 2. Go to the repository's settings → **Pages** → under Branch, pick `main` and `/root`, then Save.
 3. After a few minutes, your site will be live at something like `https://username.github.io/repo-name/`.
 
 ## Usage
 
-1. Open the site and enter your name (top corner). Click "Continue" to jump straight to your next episode, or pick a section, choose an episode from its list, and click "Start watching".
+1. Open the site and enter your name (top corner). Click "Continue" to jump straight to your next episode, or pick a course, then a section, then an episode from its list, and click "Start watching".
 2. You're taken straight to that episode's watch page. If your friend opens the site and picks the same episode (or opens the "Copy episode link" you send them), you'll both land in the same space and stay in sync — play, pause, and seek follow each other.
 3. Inside the watch page, "Previous"/"Next" (in the player's control bar) moves *you* to the next episode, without affecting your friend if they're somewhere else — just like switching voice channels.
 4. Use the chat sidebar next to the video, or the quick emoji reactions in the player, to react in real time — chat messages also pop up briefly over the video itself.

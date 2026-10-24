@@ -8,6 +8,18 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.0.0]
+
+### Changed
+- The site is no longer just for Python. Content is now organised as **Course → Section → Episode** (e.g. Python → Beginner → 1 - Installing Python). The home page shows one box per course with its logo on the left and a progress ring on the right; clicking a course shows its sections, and clicking a section shows its episodes. "Back" buttons on each level take you one step up, and "Back to episodes" in the watch room returns you to the section you were in.
+- **`videos.js` has a new format** (this is why this is a major version): it now holds a nested `COURSES` list instead of a flat list with a `section` field on every episode. Every existing episode keeps its `id`, so watch progress and chat history are untouched. The comment at the top of the file explains how to add an episode, a section or a course.
+- Previous/Next in the watch room now walk through the episodes of the same course (across its sections) and never jump into a different course.
+- Under the title, the watch room now shows "Course · Section" instead of "Episode X of Y".
+
+### Added
+- The Git course, with all 12 episodes organised into its four sections as listed in the course document, plus the Python and Git logos (in the new `assets` folder). A course without a logo shows its first letter instead.
+- A friendly console warning if the same episode or section id is used twice in `videos.js`.
+
 ## [2.7.0]
 
 ### Changed

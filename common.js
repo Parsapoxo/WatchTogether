@@ -1,6 +1,6 @@
 // Helpers shared between the landing page and the room page
 
-const APP_VERSION = "2.7.0";
+const APP_VERSION = "3.0.0";
 
 let _sbClient = null;
 
@@ -26,6 +26,24 @@ function getMyClientId() {
     localStorage.setItem("watchtogether_client_id", id);
   }
   return id;
+}
+
+// --- episode labels (shared by the home page and the watch page) ---
+
+// "40 - Training (Part 3)" -> "40". Titles without a leading number are numbered
+// by their position inside their course (so a course of 12 unnumbered episodes
+// shows 1..12 even when the episodes are split into several sections).
+function episodeNumber(video) {
+  const m = video.title.match(/^(\d+)/);
+  if (m) return m[1];
+  const sameCourse = VIDEO_LIST.filter((v) => v.course === video.course);
+  const pos = sameCourse.findIndex((v) => v.id === video.id);
+  return pos >= 0 ? String(pos + 1) : "•";
+}
+
+// "40 - Training (Part 3)" -> "Training (Part 3)"
+function episodeName(video) {
+  return video.title.replace(/^\d+\s*[-–—:]\s*/, "");
 }
 
 // --- per-video watch progress, shared between everyone via Supabase ---

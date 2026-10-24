@@ -36,7 +36,7 @@
         <div class="hero-copy">
           <p class="hero-greeting rise" id="greeting" style="--d:.05s"></p>
           <h1 class="hero-title rise" style="--d:.12s">One video.<br />Two of you.</h1>
-          <p class="hero-sub rise" style="--d:.2s">Pick up the course right where you left off. Play, pause and seek stay in sync — no codes, no setup.</p>
+          <p class="hero-sub rise" style="--d:.2s">Pick up right where you left off. Play, pause and seek stay in sync — no codes, no setup.</p>
 
           <svg class="hero-lamps rise" style="--d:.3s" viewBox="0 0 460 70" fill="none" aria-hidden="true">
             <line class="hl-line" x1="62" y1="35" x2="398" y2="35" stroke="#93a0bd" stroke-width="1.5"/>
@@ -57,17 +57,38 @@
       </div>
 
       <div class="block-title rise" style="--d:.45s">
+        <h2>Courses</h2>
+        <span>Pick one to browse its sections</span>
+      </div>
+      <div class="sections-grid" id="coursesGrid"></div>
+    </section>
+
+    <section id="viewCourse" hidden>
+      <div class="eps-head">
+        <button class="back-btn" id="courseBackBtn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          Courses
+        </button>
+        <div class="course-heading">
+          <div id="courseLogoSlot"></div>
+          <div class="eps-heading">
+            <h2 id="courseTitle"></h2>
+            <p id="courseMeta"></p>
+          </div>
+        </div>
+      </div>
+      <div class="block-title">
         <h2>Sections</h2>
-        <span>Pick one to browse its episodes</span>
+        <span>Pick one to see its episodes</span>
       </div>
       <div class="sections-grid" id="sectionsGrid"></div>
     </section>
 
     <section id="viewEpisodes" hidden>
       <div class="eps-head">
-        <button class="back-btn" id="backBtn" type="button">
+        <button class="back-btn" id="epsBackBtn" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
-          Sections
+          <span id="epsBackLabel">Back</span>
         </button>
         <div class="eps-heading">
           <h2 id="epsTitle"></h2>
@@ -105,10 +126,16 @@
     const namePill = $("namePill");
     const greeting = $("greeting");
     const viewHome = $("viewHome");
+    const viewCourse = $("viewCourse");
     const viewEpisodes = $("viewEpisodes");
     const continueCard = $("continueCard");
+    const coursesGrid = $("coursesGrid");
     const sectionsGrid = $("sectionsGrid");
     const heroStats = $("heroStats");
+    const courseLogoSlot = $("courseLogoSlot");
+    const courseTitle = $("courseTitle");
+    const courseMeta = $("courseMeta");
+    const epsBackLabel = $("epsBackLabel");
     const epsTitle = $("epsTitle");
     const epsMeta = $("epsMeta");
     const epsGrid = $("epsGrid");
@@ -129,6 +156,7 @@
     if (urlVideoId) viewHome.hidden = true; // we'll jump straight into the right section
 
     let progressMap = {};
+    let currentCourse = null;
     let currentSection = null;
     let selectedVideoId = null;
 
@@ -165,31 +193,71 @@
     const pctOf = (id) => Math.round((progressMap[id] || 0) * 100);
     const isDone = (id) => pctOf(id) >= 100;
 
-    // a leading number in the title ("40 - Training") is used as-is; titles without one
-    // fall back to their position inside their section
-    function epNumber(video) {
-      const m = video.title.match(/^(\d+)/);
-      if (m) return m[1];
-      const pos = VIDEO_LIST.filter((v) => v.section === video.section).indexOf(video);
-      return pos >= 0 ? String(pos + 1) : null;
+    function showOnly(view) {
+      [viewHome, viewCourse, viewEpisodes].forEach((v) => { v.hidden = v !== view; });
+      window.scrollTo({ top: 0 });
     }
 
-    function epName(video) {
-      return video.title.replace(/^\d+\s*[-–—:]\s*/, "");
+    // progress numbers for any group of videos, measured against how many episodes it has in total
+    function statsFor(videos, total) {
+      const sum = videos.reduce((s, v) => s + (progressMap[v.id] || 0), 0);
+      const done = videos.filter((v) => isDone(v.id)).length;
+      const pct = total > 0 ? Math.min(100, Math.round((sum / total) * 100)) : 0;
+      const next = videos.find((v) => !isDone(v.id)) || null;
+      return { videos, done, pct, next, total };
     }
 
-    function sectionStats(section) {
-      const vids = VIDEO_LIST.filter((v) => v.section === section.id);
-      const sum = vids.reduce((s, v) => s + (progressMap[v.id] || 0), 0);
-      const done = vids.filter((v) => isDone(v.id)).length;
-      const pct = Math.min(100, Math.round((sum / section.totalEpisodes) * 100));
-      const next = vids.find((v) => !isDone(v.id)) || null;
-      return { vids, done, pct, next };
-    }
+    const courseTotal = (course) => course.sections.reduce((s, sec) => s + sec.totalEpisodes, 0);
+    const courseStats = (course) => statsFor(VIDEO_LIST.filter((v) => v.course === course.id), courseTotal(course));
+    const sectionStats = (section) => statsFor(VIDEO_LIST.filter((v) => v.section === section.id), section.totalEpisodes);
 
     function findContinue() {
       const next = VIDEO_LIST.find((v) => !isDone(v.id));
       return { video: next || VIDEO_LIST[VIDEO_LIST.length - 1], allDone: !next };
+    }
+
+    // course logo, with the course's first letter as a fallback
+    function logoTile(course, small) {
+      const tile = el("div", "logo-tile" + (small ? " logo-sm" : ""));
+      const fallback = () => {
+        tile.classList.add("fallback");
+        tile.textContent = course.title.charAt(0).toUpperCase();
+      };
+      if (course.logo) {
+        const img = el("img");
+        img.src = course.logo;
+        img.alt = "";
+        img.addEventListener("error", fallback);
+        tile.append(img);
+      } else {
+        fallback();
+      }
+      return tile;
+    }
+
+    function makeRing(pct) {
+      const C = 2 * Math.PI * 34;
+      const ring = el("div", "ring");
+      ring.innerHTML = '<svg viewBox="0 0 80 80"><circle class="ring-bg" cx="40" cy="40" r="34"/><circle class="ring-fg" cx="40" cy="40" r="34"/></svg>';
+      const fg = ring.querySelector(".ring-fg");
+      fg.style.strokeDasharray = C;
+      fg.style.strokeDashoffset = C;
+      ring.append(el("span", "ring-pct", pct + "%"));
+      nextFrame(() => { fg.style.strokeDashoffset = C * (1 - pct / 100); });
+      return ring;
+    }
+
+    function nextLine(st) {
+      const line = el("div", "sc-next");
+      if (st.videos.length === 0) {
+        line.textContent = "No episodes added yet";
+      } else if (st.next) {
+        line.append("Next: ");
+        line.append(el("b", null, episodeNumber(st.next) + " · " + episodeName(st.next)));
+      } else {
+        line.textContent = "Every added episode is finished";
+      }
+      return line;
     }
 
     // ---------- name + start ----------
@@ -225,23 +293,24 @@
       window.location.href = "room.html?video=" + encodeURIComponent(videoId);
     }
 
-    // ---------- home view ----------
+    // ---------- home: continue card, stats, courses ----------
 
     function renderContinue() {
       const { video, allDone } = findContinue();
       const pct = pctOf(video.id);
-      const section = SECTIONS.find((s) => s.id === video.section);
+      const course = COURSE_BY_ID[video.course];
+      const section = SECTION_BY_ID[video.section];
 
       continueCard.innerHTML = "";
 
       const top = el("div", "cc-top");
       top.append(el("span", "cc-label", allDone ? "All caught up" : (pct > 0 ? "Continue watching" : "Up next")));
-      top.append(el("span", "cc-section", section ? section.title : ""));
+      top.append(el("span", "cc-section", (course ? course.title : "") + (section ? " · " + section.title : "")));
 
       const body = el("div", "cc-body");
-      body.append(el("div", "cc-num", epNumber(video) || "•"));
+      body.append(el("div", "cc-num", episodeNumber(video)));
       const info = el("div", "cc-info");
-      info.append(el("div", "cc-title", epName(video)));
+      info.append(el("div", "cc-title", episodeName(video)));
       info.append(el("div", "cc-meta", allDone ? "You've finished every episode" : (pct > 0 ? pct + "% watched" : "Not started yet")));
       body.append(info);
 
@@ -261,14 +330,14 @@
     }
 
     function renderStats() {
-      const total = SECTIONS.reduce((s, sec) => s + sec.totalEpisodes, 0);
+      const total = COURSES.reduce((s, c) => s + courseTotal(c), 0);
       const finished = VIDEO_LIST.filter((v) => isDone(v.id)).length;
       const sum = VIDEO_LIST.reduce((s, v) => s + (progressMap[v.id] || 0), 0);
-      const overall = Math.min(100, Math.round((sum / total) * 100));
+      const overall = total > 0 ? Math.min(100, Math.round((sum / total) * 100)) : 0;
       const toGo = Math.max(0, total - finished);
 
       heroStats.innerHTML = "";
-      [[finished, "", "finished"], [overall, "%", "of the course"], [toGo, "", "to go"]].forEach((item) => {
+      [[finished, "", "finished"], [overall, "%", "overall"], [toGo, "", "to go"]].forEach((item) => {
         const wrap = el("span");
         const num = el("strong", null, "0" + item[1]);
         wrap.append(num, item[2]);
@@ -277,66 +346,80 @@
       });
     }
 
-    function renderSections() {
-      sectionsGrid.innerHTML = "";
-      const C = 2 * Math.PI * 34;
+    function renderCourses() {
+      coursesGrid.innerHTML = "";
+      COURSES.forEach((course, i) => {
+        const st = courseStats(course);
 
-      SECTIONS.forEach((section, i) => {
-        const st = sectionStats(section);
-
-        const card = el("button", "section-card rise");
+        const card = el("button", "section-card course-card rise");
         card.type = "button";
         card.style.setProperty("--d", (0.5 + i * 0.08) + "s");
 
-        const ring = el("div", "ring");
-        ring.innerHTML = '<svg viewBox="0 0 80 80"><circle class="ring-bg" cx="40" cy="40" r="34"/><circle class="ring-fg" cx="40" cy="40" r="34"/></svg>';
-        const fg = ring.querySelector(".ring-fg");
-        fg.style.strokeDasharray = C;
-        fg.style.strokeDashoffset = C;
-        ring.append(el("span", "ring-pct", st.pct + "%"));
-
         const info = el("div", "sc-info");
-        info.append(el("div", "sc-title", section.title));
-        info.append(el("div", "sc-count", st.done + " of " + section.totalEpisodes + " episodes watched"));
+        info.append(el("div", "sc-title", course.title));
+        info.append(el("div", "sc-count", st.done + " of " + st.total + " episodes watched"));
+        info.append(nextLine(st));
 
-        const next = el("div", "sc-next");
-        if (st.vids.length === 0) {
-          next.textContent = "No episodes added yet";
-        } else if (st.next) {
-          next.append("Next: ");
-          next.append(el("b", null, (epNumber(st.next) || "•") + " · " + epName(st.next)));
-        } else {
-          next.textContent = "Every added episode is finished";
-        }
-        info.append(next);
-
-        const arrow = el("span", "sc-arrow");
-        arrow.innerHTML = ARROW_SVG;
-
-        card.append(ring, info, arrow);
-        card.addEventListener("click", () => openSection(section.id));
-        sectionsGrid.append(card);
-
-        nextFrame(() => { fg.style.strokeDashoffset = C * (1 - st.pct / 100); });
+        card.append(logoTile(course), info, makeRing(st.pct));
+        card.addEventListener("click", () => openCourse(course.id));
+        coursesGrid.append(card);
       });
     }
 
     function buildHome() {
       renderContinue();
       renderStats();
-      renderSections();
+      renderCourses();
     }
 
     function showHome() {
+      currentCourse = null;
       currentSection = null;
       startBar.hidden = true;
-      viewEpisodes.hidden = true;
-      viewHome.hidden = false;
+      showOnly(viewHome);
       buildHome();
-      window.scrollTo({ top: 0 });
     }
 
-    // ---------- episodes view ----------
+    // ---------- a course: its sections ----------
+
+    function openCourse(courseId) {
+      const course = COURSE_BY_ID[courseId];
+      if (!course) return showHome();
+
+      currentCourse = course;
+      currentSection = null;
+      startBar.hidden = true;
+      showOnly(viewCourse);
+
+      const st = courseStats(course);
+      courseLogoSlot.innerHTML = "";
+      courseLogoSlot.append(logoTile(course, true));
+      courseTitle.textContent = course.title;
+      courseMeta.textContent = st.done + " of " + st.total + " episodes watched · " + course.sections.length + (course.sections.length === 1 ? " section" : " sections");
+
+      sectionsGrid.innerHTML = "";
+      course.sections.forEach((section, i) => {
+        const sst = sectionStats(section);
+
+        const card = el("button", "section-card rise");
+        card.type = "button";
+        card.style.setProperty("--d", (0.05 + i * 0.07) + "s");
+
+        const info = el("div", "sc-info");
+        info.append(el("div", "sc-title", section.title));
+        info.append(el("div", "sc-count", sst.done + " of " + sst.total + " episodes watched"));
+        info.append(nextLine(sst));
+
+        const arrow = el("span", "sc-arrow");
+        arrow.innerHTML = ARROW_SVG;
+
+        card.append(makeRing(sst.pct), info, arrow);
+        card.addEventListener("click", () => openSection(section.id));
+        sectionsGrid.append(card);
+      });
+    }
+
+    // ---------- a section: its episodes ----------
 
     function updateStartBar() {
       const video = VIDEO_LIST.find((v) => v.id === selectedVideoId);
@@ -344,7 +427,7 @@
         startBar.hidden = true;
         return;
       }
-      startBarTitle.textContent = (epNumber(video) ? epNumber(video) + " · " : "") + epName(video);
+      startBarTitle.textContent = episodeNumber(video) + " · " + episodeName(video);
       startBar.hidden = false;
     }
 
@@ -357,43 +440,43 @@
     }
 
     function openSection(sectionId, preselectId) {
-      const section = SECTIONS.find((s) => s.id === sectionId);
+      const section = SECTION_BY_ID[sectionId];
       if (!section) return showHome();
 
+      currentCourse = COURSE_BY_ID[section.course];
       currentSection = sectionId;
-      viewHome.hidden = true;
-      viewEpisodes.hidden = false;
+      showOnly(viewEpisodes);
       noResults.hidden = true;
       episodeSearch.value = "";
       epsGrid.innerHTML = "";
-      window.scrollTo({ top: 0 });
 
       const st = sectionStats(section);
+      epsBackLabel.textContent = currentCourse.title;
       epsTitle.textContent = section.title;
-      epsMeta.textContent = st.done + " of " + section.totalEpisodes + " episodes watched · " + st.vids.length + " available";
+      epsMeta.textContent = st.done + " of " + section.totalEpisodes + " episodes watched · " + st.videos.length + " available";
 
-      if (st.vids.length === 0) {
+      if (st.videos.length === 0) {
         epsGrid.append(el("div", "empty-state", "No episodes have been added to this section yet."));
         startBar.hidden = true;
         return;
       }
 
-      const focusVideo = st.next || st.vids[st.vids.length - 1];
-      selectedVideoId = preselectId && st.vids.some((v) => v.id === preselectId) ? preselectId : focusVideo.id;
+      const focusVideo = st.next || st.videos[st.videos.length - 1];
+      selectedVideoId = preselectId && st.videos.some((v) => v.id === preselectId) ? preselectId : focusVideo.id;
 
-      st.vids.forEach((v, i) => {
+      st.videos.forEach((v, i) => {
         const pct = pctOf(v.id);
         const card = el("button", "ep-card" + (isDone(v.id) ? " done" : "") + (v.id === selectedVideoId ? " selected" : ""));
         card.type = "button";
         card.dataset.id = v.id;
-        card.dataset.search = ((epNumber(v) || "") + " " + v.title).toLowerCase();
+        card.dataset.search = (episodeNumber(v) + " " + v.title).toLowerCase();
         card.style.setProperty("--d", Math.min(i * 0.025, 0.4) + "s");
 
         const top = el("div", "ep-top");
-        top.append(el("div", "ep-num", epNumber(v) || "•"));
+        top.append(el("div", "ep-num", episodeNumber(v)));
 
         const titleWrap = el("div", "ep-title-wrap");
-        titleWrap.append(el("div", "ep-title", epName(v)));
+        titleWrap.append(el("div", "ep-title", episodeName(v)));
         if (st.next && v.id === st.next.id) {
           titleWrap.append(el("span", "ep-badge", pct > 0 ? "Continue" : "Up next"));
         }
@@ -428,7 +511,11 @@
       noResults.hidden = visible !== 0 || epsGrid.querySelector(".ep-card") === null;
     });
 
-    $("backBtn").addEventListener("click", showHome);
+    $("courseBackBtn").addEventListener("click", showHome);
+    $("epsBackBtn").addEventListener("click", () => {
+      if (currentCourse) openCourse(currentCourse.id);
+      else showHome();
+    });
     $("startSelectedBtn").addEventListener("click", () => {
       if (selectedVideoId) startEpisode(selectedVideoId);
     });
