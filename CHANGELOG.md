@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.2.0]
+
+### Added
+- A site icon (favicon): the two glowing lamps from the logo, amber and teal, on the site's dark navy. It is provided as an SVG (sharp at any size), an ICO for older browsers, and a 180px icon for adding the site to a phone's home screen. The browser's address bar colour on phones now matches the site's background.
+
 ## [3.1.0]
 
 ### Added
