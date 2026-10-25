@@ -35,6 +35,12 @@
 
   <main class="home-wrap">
 
+    <div class="notice" id="progressNotice" hidden>
+      <strong>Couldn't load your progress.</strong>
+      The progress service isn't reachable right now (it may be blocked on this connection), so percentages show as 0%.
+      Everything else still works.
+    </div>
+
     <section id="viewHome">
       <div class="hero">
         <div class="hero-copy">
@@ -528,6 +534,7 @@
 
     fetchProgressMap(VIDEO_LIST.map((v) => v.id)).then((map) => {
       progressMap = map;
+      $("progressNotice").hidden = !progressLoadFailed;
       const video = urlVideoId ? VIDEO_LIST.find((v) => v.id === urlVideoId) : null;
       if (video) {
         buildHome();

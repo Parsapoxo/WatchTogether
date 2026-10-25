@@ -8,6 +8,12 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.2.1]
+
+### Fixed
+- If the database/realtime service (Supabase) couldn't be reached, the home page stayed on "Loading your progress…" forever and the courses never appeared, because the request had no time limit (some connections silently drop requests instead of refusing them) and a failure to load the Supabase library crashed the page. Requests now give up after 4 seconds, the home page shows everything with progress at 0% plus a short notice explaining why, and a library that fails to load no longer breaks the page.
+- The same for the watch page: if Supabase can't be reached, the video and all player controls still work (you just watch alone) and a status message explains that live sync and chat are unavailable. Sync reconnects by itself when the service comes back.
+
 ## [3.2.0]
 
 ### Added

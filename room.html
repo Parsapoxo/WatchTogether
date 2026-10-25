@@ -409,12 +409,28 @@
 
     // --- realtime channel for this episode (playback events + who's watching) ---
     // everyone watching the same episode shares this channel; other episodes are independent
-    const channel = sb.channel("episode:" + video.id, {
+    // if the Supabase library couldn't load at all, use a do-nothing channel so the player,
+    // controls and everything else keep working (you just watch alone)
+    const offlineChannel = {
+      on() { return offlineChannel; },
+      subscribe() { return offlineChannel; },
+      track() { return Promise.resolve(); },
+      send() {},
+      presenceState() { return {}; }
+    };
+
+    const channel = sb ? sb.channel("episode:" + video.id, {
       config: {
         broadcast: { self: false },
         presence: { key: myClientId }
       }
-    });
+    }) : offlineChannel;
+
+    let syncOffline = false;
+    if (!sb) {
+      syncOffline = true;
+      setStatus("Live sync and chat are unavailable right now — you can still watch", true);
+    }
 
     channel.on("broadcast", { event: "playback" }, (msg) => {
       const p = msg.payload;
@@ -498,7 +514,14 @@
 
     channel.subscribe(async (status) => {
       if (status === "SUBSCRIBED") {
+        if (syncOffline) {
+          syncOffline = false;
+          clearStatus();
+        }
         await channel.track({ name: myName });
+      } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+        syncOffline = true;
+        setStatus("Can't reach the sync service right now — playback isn't being shared", true);
       }
     });
 

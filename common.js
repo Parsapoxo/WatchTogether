@@ -1,14 +1,33 @@
 // Helpers shared between the landing page and the room page
 
-const APP_VERSION = "3.2.0";
+const APP_VERSION = "3.2.1";
 
 let _sbClient = null;
 
+// set to true when the progress service couldn't be reached (so pages can tell the user)
+let progressLoadFailed = false;
+
+// How long to wait for the database before giving up. Some connections silently drop
+// requests to it instead of refusing them, and without a limit the page would wait forever.
+const SUPABASE_TIMEOUT_MS = 4000;
+
+// returns null (instead of crashing the page) when the Supabase library itself couldn't be loaded
 function initSupabase() {
   if (!_sbClient) {
+    if (typeof supabase === "undefined") return null;
     _sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
   return _sbClient;
+}
+
+function withTimeout(promiseLike, ms) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("timed out after " + ms + "ms")), ms);
+    Promise.resolve(promiseLike).then(
+      (value) => { clearTimeout(timer); resolve(value); },
+      (error) => { clearTimeout(timer); reject(error); }
+    );
+  });
 }
 
 function getMyName() {
@@ -49,14 +68,20 @@ function episodeName(video) {
 // --- per-video watch progress, shared between everyone via Supabase ---
 
 async function fetchProgressMap(videoIds) {
-  const sb = initSupabase();
   const map = {};
   videoIds.forEach((id) => { map[id] = 0; });
   try {
-    const { data, error } = await sb.from("progress").select("video_id, fraction").in("video_id", videoIds);
+    const sb = initSupabase();
+    if (!sb) throw new Error("the Supabase library did not load");
+    const { data, error } = await withTimeout(
+      sb.from("progress").select("video_id, fraction").in("video_id", videoIds),
+      SUPABASE_TIMEOUT_MS
+    );
     if (error) throw error;
     (data || []).forEach((row) => { map[row.video_id] = row.fraction; });
+    progressLoadFailed = false;
   } catch (e) {
+    progressLoadFailed = true;
     console.error("Couldn't load shared progress:", e);
   }
   return map;
@@ -82,12 +107,15 @@ async function saveSharedProgress(videoId, fraction) {
 async function fetchChatHistory(videoId, limit) {
   const sb = initSupabase();
   try {
-    const { data, error } = await sb
-      .from("messages")
-      .select("sender_id, name, body, created_at")
-      .eq("video_id", videoId)
-      .order("created_at", { ascending: true })
-      .limit(limit || 50);
+    const { data, error } = await withTimeout(
+      sb
+        .from("messages")
+        .select("sender_id, name, body, created_at")
+        .eq("video_id", videoId)
+        .order("created_at", { ascending: true })
+        .limit(limit || 50),
+      SUPABASE_TIMEOUT_MS
+    );
     if (error) throw error;
     return data || [];
   } catch (e) {

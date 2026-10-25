@@ -1667,6 +1667,24 @@ select {
   box-shadow: 0 10px 26px -12px rgba(242, 165, 65, 0.7);
 }
 
+/* ---------- notice banner (e.g. progress service unreachable) ---------- */
+
+.notice {
+  margin-bottom: 28px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 104, 92, 0.35);
+  background: rgba(226, 104, 92, 0.08);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.notice strong {
+  color: var(--text);
+  margin-right: 4px;
+}
+
 /* ---------- courses: logo tiles and the course page ---------- */
 
 .logo-tile {
