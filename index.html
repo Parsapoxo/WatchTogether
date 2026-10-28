@@ -359,6 +359,21 @@
     function renderCourses() {
       coursesGrid.innerHTML = "";
       COURSES.forEach((course, i) => {
+        // a course whose lessons aren't ready yet: shown, but not clickable
+        if (course.comingSoon) {
+          const soon = el("div", "section-card course-card coming-soon rise");
+          soon.style.setProperty("--d", (0.5 + i * 0.08) + "s");
+          soon.setAttribute("aria-disabled", "true");
+
+          const soonInfo = el("div", "sc-info");
+          soonInfo.append(el("div", "sc-title", course.title));
+          soonInfo.append(el("div", "sc-count", "The lessons are being prepared"));
+
+          soon.append(logoTile(course), soonInfo, el("span", "soon-pill", "Coming soon"));
+          coursesGrid.append(soon);
+          return;
+        }
+
         const st = courseStats(course);
 
         const card = el("button", "section-card course-card rise");

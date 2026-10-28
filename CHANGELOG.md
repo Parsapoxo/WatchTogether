@@ -8,6 +8,12 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.3.0]
+
+### Added
+- The HTML and CSS courses, with their logos, shown in a "Coming soon" state: they appear on the home page with a dashed card and a "Coming soon" tag, can't be opened, and don't count towards the overall progress yet.
+- A `comingSoon: true` option for courses in `videos.js` (documented at the top of the file) for any course whose lessons aren't ready. Remove that line and add sections to switch the course on.
+
 ## [3.2.1]
 
 ### Fixed

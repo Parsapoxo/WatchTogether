@@ -18,6 +18,10 @@
 //   - New course:   add { id, title, logo, sections: [...] } to COURSES and put its
 //                   logo image in the `assets` folder (`logo` is the path to it).
 //                   Without a logo the course shows its first letter instead.
+//                   Add `comingSoon: true` (and leave `sections: []`) for a course whose
+//                   lessons aren't ready yet: it appears with a "Coming soon" tag and
+//                   can't be opened. When you're ready, delete the `comingSoon` line
+//                   and fill in the sections.
 // =============================================================================
 
 const COURSES = [
@@ -381,6 +385,20 @@ const COURSES = [
         ]
       }
     ]
+  },
+  {
+    id: "html",
+    title: "HTML",
+    logo: "assets/html.svg",
+    comingSoon: true,
+    sections: []
+  },
+  {
+    id: "css",
+    title: "CSS",
+    logo: "assets/css.svg",
+    comingSoon: true,
+    sections: []
   }
 ];
 

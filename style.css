@@ -1748,6 +1748,37 @@ select {
   margin-top: 40px;
 }
 
+/* ---------- course that is "coming soon" ---------- */
+
+.section-card.coming-soon {
+  cursor: default;
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.section-card.coming-soon:hover {
+  transform: none;
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.coming-soon .logo-tile {
+  opacity: 0.7;
+  filter: saturate(0.75);
+}
+
+.soon-pill {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px dashed rgba(242, 165, 65, 0.45);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -1775,6 +1806,11 @@ select {
   .course-card .ring {
     width: 68px;
     height: 68px;
+  }
+
+  .soon-pill {
+    padding: 6px 10px;
+    font-size: 0.72rem;
   }
 
   .section-card {

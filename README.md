@@ -85,7 +85,7 @@ Everything the site can play is described in `videos.js`, and the comment at the
 
 - **An episode:** add an `{ id, title, url }` block to the `episodes` list of the right section. The `id` must be unique and must never change afterwards (progress and chat are saved under it). A title that starts with a number (`"40 - Training"`) shows that number on its tile; titles without one are numbered by their position inside the course.
 - **A section:** add `{ id, title, totalEpisodes, episodes: [] }` to a course's `sections`. `totalEpisodes` is how many episodes the section has in total, including ones you haven't added yet; progress is measured against it.
-- **A course:** add `{ id, title, logo, sections: [...] }` to `COURSES` and put its logo image in the `assets` folder (e.g. `assets/python.webp`). Without a logo, the course shows its first letter.
+- **A course:** add `{ id, title, logo, sections: [...] }` to `COURSES` and put its logo image in the `assets` folder (e.g. `assets/python.webp`). Without a logo, the course shows its first letter. For a course whose lessons aren't ready yet, add `comingSoon: true` and leave `sections: []`: it appears with a "Coming soon" tag and can't be opened until you remove that line and fill in its sections.
 
 ## Step 5: Upload to GitHub and turn on GitHub Pages
 
