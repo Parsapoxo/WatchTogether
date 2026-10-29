@@ -23,9 +23,17 @@ body {
   height: 100%;
 }
 
+/* The page background lives on <html> and is fixed to the window. It never repeats and
+   never shows a seam when a page is taller than the screen, however many courses are added. */
+html {
+  background-color: var(--bg);
+  background-image: radial-gradient(1200px 600px at 50% -10%, #1a2544 0%, var(--bg) 60%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 body {
   margin: 0;
-  background: radial-gradient(1200px 600px at 50% -10%, #1a2544 0%, var(--bg) 60%);
   color: var(--text);
   font-family: 'Inter', sans-serif;
   direction: ltr;

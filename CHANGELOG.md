@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.3.1]
+
+### Fixed
+- At the bottom of the home page (when the page is taller than the screen) the background changed to a different shade with a visible edge. The background gradient was being sized to the window and repeated down the page. It is now drawn once and fixed to the window, so the background stays one smooth, even colour no matter how tall the page gets, including after more courses are added.
+
 ## [3.3.0]
 
 ### Added

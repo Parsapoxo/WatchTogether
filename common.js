@@ -1,6 +1,6 @@
 // Helpers shared between the landing page and the room page
 
-const APP_VERSION = "3.3.0";
+const APP_VERSION = "3.3.1";
 
 let _sbClient = null;
 
