@@ -1,0 +1,364 @@
+/*
+ * Halloween theme: decorations and effects.
+ * Only on the "Halloween" branch. The colour palette is changed directly in style.css.
+ */
+
+/* ---------- layers ---------- */
+
+.hw-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hw-sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 34vh;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ---------- cobwebs in the top corners ---------- */
+
+.hw-web {
+  position: absolute;
+  top: 0;
+  width: clamp(110px, 15vw, 210px);
+  opacity: 0.4;
+}
+
+.hw-web img {
+  display: block;
+  width: 100%;
+}
+
+.hw-web-left {
+  left: 0;
+}
+
+.hw-web-right {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* ---------- mist drifting along the bottom ---------- */
+
+.hw-mist {
+  position: absolute;
+  left: -20%;
+  bottom: -8vh;
+  width: 140%;
+  height: 38vh;
+  background:
+    radial-gradient(ellipse at 28% 62%, rgba(150, 110, 210, 0.17), transparent 60%),
+    radial-gradient(ellipse at 74% 70%, rgba(139, 226, 139, 0.07), transparent 55%);
+  animation: hwMist 26s ease-in-out infinite alternate;
+}
+
+.hw-mist-b {
+  bottom: -14vh;
+  opacity: 0.8;
+  animation-duration: 34s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes hwMist {
+  from {
+    transform: translateX(-4%);
+  }
+  to {
+    transform: translateX(6%);
+  }
+}
+
+/* ---------- home page only: moon, spider, drifting ghost ---------- */
+
+.hw-moon {
+  position: absolute;
+  top: 74px;
+  right: -46px;
+  width: clamp(140px, 17vw, 250px);
+  opacity: 0.85;
+  filter: drop-shadow(0 0 60px rgba(255, 150, 60, 0.35));
+  animation: hwMoon 9s ease-in-out infinite alternate;
+}
+
+.hw-moon img {
+  display: block;
+  width: 100%;
+}
+
+@keyframes hwMoon {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(12px);
+  }
+}
+
+.hw-spider {
+  position: absolute;
+  top: 0;
+  left: 3.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hw-thread {
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.35);
+  animation: hwThread 8s ease-in-out infinite;
+}
+
+.hw-spider img {
+  display: block;
+  width: 34px;
+  filter: drop-shadow(0 0 8px rgba(155, 123, 209, 0.5));
+}
+
+@keyframes hwThread {
+  0%,
+  100% {
+    height: 60px;
+  }
+  45%,
+  62% {
+    height: 150px;
+  }
+}
+
+.hw-drift-ghost {
+  position: absolute;
+  right: -90px;
+  bottom: 12vh;
+  width: 70px;
+  opacity: 0.2;
+  filter: drop-shadow(0 0 14px rgba(139, 226, 139, 0.7));
+  animation: hwDrift 52s linear infinite;
+}
+
+.hw-drift-ghost img {
+  display: block;
+  width: 100%;
+}
+
+@keyframes hwDrift {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-55vw, -34px);
+  }
+  100% {
+    transform: translate(-115vw, 8px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .hw-spider {
+    display: none;
+  }
+}
+
+/* ---------- bats ---------- */
+
+.hw-bat {
+  position: absolute;
+  left: -90px;
+  width: calc(64px * var(--s, 1));
+  animation: hwBatFly var(--dur, 26s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.hw-bat-inner {
+  animation: hwBatBob 2.4s ease-in-out infinite;
+}
+
+.hw-bat img {
+  display: block;
+  width: 100%;
+  transform-origin: 50% 60%;
+  animation: hwFlap 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes hwBatFly {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw + 180px));
+  }
+}
+
+@keyframes hwBatBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+@keyframes hwFlap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0.5);
+  }
+}
+
+/* ---------- hero: jack-o'-lantern and ghost linked by a glowing dashed line ---------- */
+
+.hw-hero-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 440px;
+  margin-top: 30px;
+}
+
+.hw-pumpkin {
+  width: 68px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 16px rgba(255, 122, 26, 0.6));
+  animation: hwFlicker 3.4s ease-in-out infinite;
+}
+
+.hw-ghost {
+  width: 54px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 14px rgba(139, 226, 139, 0.65));
+  animation: hwFloat 3.8s ease-in-out infinite;
+}
+
+.hw-line {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(169, 155, 196, 0.75) 0 4px, transparent 4px 11px);
+  background-size: 22px 2px;
+  animation: hwDash 1.6s linear infinite;
+}
+
+.hw-wisp {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: hwWisp 3.6s ease-in-out infinite;
+}
+
+.hw-wisp.back {
+  background: var(--friend);
+  box-shadow: 0 0 12px var(--friend);
+  animation-name: hwWispBack;
+  animation-delay: 1.8s;
+}
+
+@keyframes hwDash {
+  to {
+    background-position-x: -22px;
+  }
+}
+
+@keyframes hwWisp {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 9px);
+    opacity: 0;
+  }
+}
+
+@keyframes hwWispBack {
+  0% {
+    left: calc(100% - 9px);
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes hwFlicker {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 16px rgba(255, 122, 26, 0.6));
+  }
+  18% {
+    filter: drop-shadow(0 0 9px rgba(255, 122, 26, 0.35));
+  }
+  34% {
+    filter: drop-shadow(0 0 20px rgba(255, 122, 26, 0.7));
+  }
+  62% {
+    filter: drop-shadow(0 0 11px rgba(255, 122, 26, 0.42));
+  }
+}
+
+@keyframes hwFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* ---------- headline glow, like a flickering candle ---------- */
+
+.hero-title {
+  text-shadow: 0 0 30px rgba(255, 122, 26, 0.3);
+  animation: fadeUp 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) backwards, hwTitleGlow 5.5s ease-in-out infinite;
+  animation-delay: var(--d, 0s), 0s;
+}
+
+@keyframes hwTitleGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 30px rgba(255, 122, 26, 0.3);
+  }
+  46% {
+    text-shadow: 0 0 34px rgba(255, 122, 26, 0.38);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(255, 122, 26, 0.12);
+  }
+  54% {
+    text-shadow: 0 0 32px rgba(255, 122, 26, 0.36);
+  }
+}
+
+/* the continue card glows a little like a lantern */
+.continue-card {
+  box-shadow: 0 30px 70px -35px rgba(0, 0, 0, 0.75), 0 0 60px -30px rgba(255, 122, 26, 0.45);
+}

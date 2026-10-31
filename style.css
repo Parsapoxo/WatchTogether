@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #10182b;
-  --surface: #19233d;
-  --surface-2: #212d4a;
-  --text: #ece7dd;
-  --muted: #93a0bd;
-  --accent: #f2a541;
-  --accent-soft: #f2a54122;
-  --friend: #5fb3a3;
+  --bg: #0d0715;
+  --surface: #190f27;
+  --surface-2: #22143a;
+  --text: #f3e9d8;
+  --muted: #a99bc4;
+  --accent: #ff7a1a;
+  --accent-soft: #ff7a1a26;
+  --friend: #8be28b;
   --line: rgba(255, 255, 255, 0.08);
-  --danger: #e2685c;
+  --danger: #ff4d6d;
   --radius: 14px;
 }
 
@@ -27,7 +27,7 @@ body {
    never shows a seam when a page is taller than the screen, however many courses are added. */
 html {
   background-color: var(--bg);
-  background-image: radial-gradient(1200px 600px at 50% -10%, #1a2544 0%, var(--bg) 60%);
+  background-image: radial-gradient(1200px 600px at 50% -10%, #2b1247 0%, var(--bg) 60%);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -94,19 +94,19 @@ select {
 
 @keyframes ringPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(95, 179, 163, 0.45);
+    box-shadow: 0 0 0 0 rgba(139, 226, 139, 0.45);
   }
   100% {
-    box-shadow: 0 0 0 9px rgba(95, 179, 163, 0);
+    box-shadow: 0 0 0 9px rgba(139, 226, 139, 0);
   }
 }
 
 @keyframes ringPulseMe {
   0% {
-    box-shadow: 0 0 0 0 rgba(242, 165, 65, 0.45);
+    box-shadow: 0 0 0 0 rgba(255, 122, 26, 0.45);
   }
   100% {
-    box-shadow: 0 0 0 9px rgba(242, 165, 65, 0);
+    box-shadow: 0 0 0 9px rgba(255, 122, 26, 0);
   }
 }
 
@@ -193,7 +193,7 @@ select {
 
 .btn-primary {
   background: var(--accent);
-  color: #241503;
+  color: #2a1100;
 }
 
 .btn-primary:hover {
@@ -367,7 +367,7 @@ select {
   max-width: 60%;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(15, 20, 35, 0.85);
+  background: rgba(20, 9, 30, 0.85);
   backdrop-filter: blur(6px);
   border: 1px solid var(--line);
   color: var(--text);
@@ -407,7 +407,7 @@ select {
 }
 
 .video-msg {
-  background: rgba(15, 20, 35, 0.85);
+  background: rgba(20, 9, 30, 0.85);
   backdrop-filter: blur(6px);
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -453,7 +453,7 @@ select {
   right: 0;
   bottom: 0;
   padding: 10px 14px 12px;
-  background: linear-gradient(180deg, transparent 0%, rgba(6, 10, 20, 0.85) 65%);
+  background: linear-gradient(180deg, transparent 0%, rgba(9, 3, 15, 0.85) 65%);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -542,7 +542,7 @@ select {
 }
 
 .vplayer-time {
-  color: #dfe4ee;
+  color: #ece4f6;
   font-size: 0.76rem;
   white-space: nowrap;
   min-width: 80px;
@@ -694,7 +694,7 @@ select {
 
 .chat-msg.me .chat-msg-body {
   background: var(--accent-soft);
-  border-color: rgba(242, 165, 65, 0.35);
+  border-color: rgba(255, 122, 26, 0.35);
 }
 
 .chat-input-row {
@@ -732,8 +732,8 @@ select {
 }
 
 .vplayer-frame.synced {
-  box-shadow: 0 0 0 3px var(--accent-soft), 0 0 40px -8px rgba(242, 165, 65, 0.35);
-  border-color: rgba(242, 165, 65, 0.4);
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 0 40px -8px rgba(255, 122, 26, 0.35);
+  border-color: rgba(255, 122, 26, 0.4);
 }
 
 .vplayer-frame video {
@@ -779,8 +779,8 @@ select {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(620px 420px at 10% 6%, rgba(242, 165, 65, 0.17), transparent 70%),
-    radial-gradient(680px 460px at 92% 0%, rgba(95, 179, 163, 0.16), transparent 70%);
+    radial-gradient(620px 420px at 10% 6%, rgba(255, 122, 26, 0.17), transparent 70%),
+    radial-gradient(680px 460px at 92% 0%, rgba(139, 226, 139, 0.16), transparent 70%);
   animation: glowDrift 16s ease-in-out infinite alternate;
 }
 
@@ -1042,9 +1042,9 @@ select {
 .continue-card {
   padding: 28px;
   border-radius: 22px;
-  border: 1px solid rgba(242, 165, 65, 0.28);
+  border: 1px solid rgba(255, 122, 26, 0.28);
   background:
-    radial-gradient(420px 220px at 100% 0%, rgba(242, 165, 65, 0.13), transparent 70%),
+    radial-gradient(420px 220px at 100% 0%, rgba(255, 122, 26, 0.13), transparent 70%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   box-shadow: 0 30px 70px -35px rgba(0, 0, 0, 0.75);
 }
@@ -1101,7 +1101,7 @@ select {
   place-items: center;
   border-radius: 20px;
   background: var(--accent-soft);
-  border: 1px solid rgba(242, 165, 65, 0.3);
+  border: 1px solid rgba(255, 122, 26, 0.3);
   color: var(--accent);
   font-weight: 700;
   font-size: 1.7rem;
@@ -1157,7 +1157,7 @@ select {
 }
 
 .btn-glow {
-  box-shadow: 0 12px 32px -12px rgba(242, 165, 65, 0.7);
+  box-shadow: 0 12px 32px -12px rgba(255, 122, 26, 0.7);
 }
 
 .block-title {
@@ -1204,8 +1204,8 @@ select {
 
 .section-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(242, 165, 65, 0.45);
-  box-shadow: 0 26px 50px -30px rgba(242, 165, 65, 0.5);
+  border-color: rgba(255, 122, 26, 0.45);
+  box-shadow: 0 26px 50px -30px rgba(255, 122, 26, 0.5);
 }
 
 .ring {
@@ -1400,7 +1400,7 @@ select {
 .ep-card.selected {
   border-color: var(--accent);
   background: var(--accent-soft);
-  box-shadow: 0 0 0 3px rgba(242, 165, 65, 0.12);
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.12);
 }
 
 .ep-top {
@@ -1444,7 +1444,7 @@ select {
   margin-top: 6px;
   padding: 2px 9px;
   border-radius: 999px;
-  border: 1px solid rgba(242, 165, 65, 0.4);
+  border: 1px solid rgba(255, 122, 26, 0.4);
   color: var(--accent);
   font-size: 0.68rem;
   font-weight: 600;
@@ -1490,9 +1490,9 @@ select {
   gap: 16px;
   padding: 12px 12px 12px 22px;
   border-radius: 20px;
-  background: rgba(22, 30, 52, 0.88);
+  background: rgba(28, 14, 42, 0.88);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(242, 165, 65, 0.3);
+  border: 1px solid rgba(255, 122, 26, 0.3);
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.8);
   transform: translateX(-50%);
   animation: barIn 0.35s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
@@ -1544,8 +1544,8 @@ select {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(620px 420px at 6% 0%, rgba(242, 165, 65, 0.14), transparent 70%),
-    radial-gradient(680px 460px at 96% 100%, rgba(95, 179, 163, 0.13), transparent 70%);
+    radial-gradient(620px 420px at 6% 0%, rgba(255, 122, 26, 0.14), transparent 70%),
+    radial-gradient(680px 460px at 96% 100%, rgba(139, 226, 139, 0.13), transparent 70%);
   animation: glowDrift 16s ease-in-out infinite alternate;
 }
 
@@ -1578,7 +1578,7 @@ select {
   place-items: center;
   border-radius: 14px;
   background: var(--accent-soft);
-  border: 1px solid rgba(242, 165, 65, 0.3);
+  border: 1px solid rgba(255, 122, 26, 0.3);
   color: var(--accent);
   font-weight: 700;
   font-size: 0.95rem;
@@ -1672,7 +1672,7 @@ select {
 .chat-send-btn {
   border-radius: 999px;
   padding: 11px 20px;
-  box-shadow: 0 10px 26px -12px rgba(242, 165, 65, 0.7);
+  box-shadow: 0 10px 26px -12px rgba(255, 122, 26, 0.7);
 }
 
 /* ---------- notice banner (e.g. progress service unreachable) ---------- */
@@ -1681,8 +1681,8 @@ select {
   margin-bottom: 28px;
   padding: 14px 18px;
   border-radius: 14px;
-  border: 1px solid rgba(226, 104, 92, 0.35);
-  background: rgba(226, 104, 92, 0.08);
+  border: 1px solid rgba(255, 77, 109, 0.35);
+  background: rgba(255, 77, 109, 0.08);
   color: var(--muted);
   font-size: 0.88rem;
   line-height: 1.6;
@@ -1717,7 +1717,7 @@ select {
 .logo-tile.fallback {
   padding: 0;
   background: var(--accent-soft);
-  border-color: rgba(242, 165, 65, 0.3);
+  border-color: rgba(255, 122, 26, 0.3);
   color: var(--accent);
   font-size: 1.8rem;
   font-weight: 700;
@@ -1779,7 +1779,7 @@ select {
   flex-shrink: 0;
   padding: 7px 14px;
   border-radius: 999px;
-  border: 1px dashed rgba(242, 165, 65, 0.45);
+  border: 1px dashed rgba(255, 122, 26, 0.45);
   background: var(--accent-soft);
   color: var(--accent);
   font-size: 0.8rem;

@@ -8,6 +8,17 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.4.0+halloween] - temporary seasonal theme (branch `Halloween`)
+
+This is the same code and features as 3.4.0 (the `+halloween` part is SemVer build metadata, shown after the version number on the site). Only the look changes. The `main` branch is untouched and keeps the normal theme; to go back, point GitHub Pages at `main` again.
+
+### Added
+- A Halloween colour palette: pumpkin orange instead of amber, ghost green instead of teal, and a deep purple-black background, applied everywhere (home page, watch room, chat, player controls).
+- Decorations: cobwebs in the top corners, slowly drifting mist along the bottom, and, on the home page only, a glowing moon, a spider dangling from a thread, bats flying across the top of the screen, and a faint ghost drifting by. The watch room only gets the cobwebs and mist, so nothing moves over the video.
+- The home page's two lamps became a flickering jack-o'-lantern and a floating ghost, linked by the same glowing dashed line with a spirit travelling both ways. The headline glows like a candle, and the greeting says "Happy Halloween".
+- A jack-o'-lantern site icon (favicon) in place of the two lamps.
+- Everything animated respects the system's "reduce motion" setting.
+
 ## [3.4.0]
 
 ### Added

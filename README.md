@@ -103,3 +103,7 @@ Everything the site can play is described in `videos.js`, and the comment at the
 ## Versioning
 
 This project follows **Semantic Versioning** (`MAJOR.MINOR.PATCH`). See `CHANGELOG.md` for what changed in each version, and the app version is shown next to the site name.
+
+## Seasonal theme (Halloween branch)
+
+The `Halloween` branch is a temporary Halloween version of the site: the same code and features as `main`, with a different colour palette and some animated decorations (`halloween.css`, `halloween.js`, and the `assets/halloween` folder). To show it, set GitHub Pages (repository Settings → Pages → Branch) to `Halloween`; to go back to the normal site, set it to `main` again. `main` is never changed by the theme.
