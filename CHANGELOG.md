@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.4.0]
+
+### Added
+- Python → Beginner episodes 70 to 107 (38 episodes, from "The Protection Bill and Programming" through to "End of the Beginner section and start of the advanced section"), with their video links taken from the course document. Titles are written as in the document, with the number added in front (e.g. "70 - ...") like the earlier episodes. Every episode keeps the id pattern `py-<number>`.
+
 ## [3.3.1]
 
 ### Fixed

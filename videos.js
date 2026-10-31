@@ -204,6 +204,196 @@ const COURSES = [
             id: "py-69",
             title: "69 - Python Map Function",
             url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/b2a3921d-8d1b-498d-b08e-043f2eccabf4/69_pythonmapfunction.mp4"
+          },
+          {
+            id: "py-70",
+            title: "70 - The Protection Bill and Programming",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/5fd1cecb-cbef-4f52-b4fd-d43365dcbfa5/70_python70.mp4"
+          },
+          {
+            id: "py-71",
+            title: "71 - Getting Started with Object-Oriented Programming in Python",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/3c9ad838-6dfd-4bcd-bcf5-88c33ca82155/71_python71.mp4"
+          },
+          {
+            id: "py-72",
+            title: "72 - Creating the first class and object",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/04dcbc80-e818-4221-9341-5d3694214f93/72_python72.mp4"
+          },
+          {
+            id: "py-73",
+            title: "73 - __init__ function",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/5fb45b64-e53f-480a-a7eb-ec968e334c0e/73_python73.mp4"
+          },
+          {
+            id: "py-74",
+            title: "74 - The __init__ function – Part 2",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/cc7e32af-7d69-4ae9-bcbe-6516478cf908/74_python74.mp4"
+          },
+          {
+            id: "py-75",
+            title: "75 - object methods",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/53720c30-fea6-456e-aedf-4ee39b1f617c/75_python75.mp4"
+          },
+          {
+            id: "py-76",
+            title: "76 - Modify and delete object properties",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/8d71ebfb-4560-49e0-ad24-b8aeb9499e3e/76_python76.mp4"
+          },
+          {
+            id: "py-77",
+            title: "77 - Training (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/d8ac7aeb-081f-4229-8ed4-1cf443b637d0/77_python77.mp4"
+          },
+          {
+            id: "py-78",
+            title: "78 - Training (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/edeffcb6-c828-402a-bf1a-09828ed79de8/78_python78.mp4"
+          },
+          {
+            id: "py-79",
+            title: "79 - Training (Part 3)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/1033479c-b8f8-4169-928c-a8143b51800f/79_python79.mp4"
+          },
+          {
+            id: "py-80",
+            title: "80 - Inheritance in Python (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/615d68f9-17e1-49e2-bfff-f836cee60acd/80_python80.mp4"
+          },
+          {
+            id: "py-81",
+            title: "81 - Inheritance in Python (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/3b2aeeff-2a30-41f7-a8b0-27b467178150/81_python81.mp4"
+          },
+          {
+            id: "py-82",
+            title: "82 - Overriding the __init__ method",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/a19967a8-5590-40d5-93c5-1d6464d08837/82_python82.mp4"
+          },
+          {
+            id: "py-83",
+            title: "83 - Python super",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/5a485847-cf8b-4c16-8239-2f5d90840553/83_python83.mp4"
+          },
+          {
+            id: "py-84",
+            title: "84 - add methods to the child class",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/f670f6d1-5638-488c-9eb1-c84581228cba/84_python84.mp4"
+          },
+          {
+            id: "py-85",
+            title: "85 - Training (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/908f1985-9466-4372-8193-6b98de201fec/85_python85.mp4"
+          },
+          {
+            id: "py-86",
+            title: "86 - Training (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/28d18fe8-a941-4fcf-9502-ca2da6c63125/86_python86.mp4"
+          },
+          {
+            id: "py-87",
+            title: "87 - Python Scope",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/2d1c94f5-494e-4a72-af8f-0d57e1138484/87_python87.mp4"
+          },
+          {
+            id: "py-88",
+            title: "88 - Python modules",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/a84e095a-0516-402b-bac0-8ff5c3bf6c98/88_python88.mp4"
+          },
+          {
+            id: "py-89",
+            title: "89 - python modules (platform and random)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/0d492e39-69a0-4b61-bae1-f745c2ef2427/89_python89.mp4"
+          },
+          {
+            id: "py-90",
+            title: "90 - Python datetime module",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/4bd12abe-fc20-4603-b04c-3c452bae85ee/90_python90.mp4"
+          },
+          {
+            id: "py-91",
+            title: "91 - Time zone",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/353d558c-6214-490c-a96b-137b047cfdda/91_python91.mp4"
+          },
+          {
+            id: "py-92",
+            title: "92 - Calculating the time difference between two dates and working with timedelta",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/d8e7b496-19fb-4149-9904-c242f80d1828/92_python92.mp4"
+          },
+          {
+            id: "py-93",
+            title: "93 - python math(min,max,abs,pow,...)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/b5f648ef-e94e-4f76-80ba-9712260f7a9c/93_python93.mp4"
+          },
+          {
+            id: "py-94",
+            title: "94 - The start of an important topic!",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/3897e365-f61d-47e6-9390-dfec39aa2d03/94_python94.mp4"
+          },
+          {
+            id: "py-95",
+            title: "95 - JSON (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/3278c913-fe62-46fa-af04-7a060a1eb4c6/95_python95.mp4"
+          },
+          {
+            id: "py-96",
+            title: "96 - What is an API?",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/7124b195-8475-4c61-8e43-d58f3fee12cb/96_python96.mp4"
+          },
+          {
+            id: "py-97",
+            title: "97 - JSON (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/a3538b93-f4ac-4225-85ae-a34960a36f98/97_python-97.mp4"
+          },
+          {
+            id: "py-98",
+            title: "98 - json module",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/8429e854-cf30-4abd-92ff-88fed7509d8b/98_python-98.mp4"
+          },
+          {
+            id: "py-99",
+            title: "99 - web scraping & regex",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/05e0a7f3-f428-4dd2-be42-06fb11e6d273/99_python-99.mp4"
+          },
+          {
+            id: "py-100",
+            title: "100 - PIP",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/5142fcfb-e989-4297-98e4-551673278786/100_python-100.mp4"
+          },
+          {
+            id: "py-101",
+            title: "101 - CMD Commands",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/08520339-d291-4249-9615-e02afcfbe651/101_python-101.mp4"
+          },
+          {
+            id: "py-102",
+            title: "102 - Virtual Environment (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/4d25e7c2-ec88-4028-a898-63944ed7a2be/102_python-102.mp4"
+          },
+          {
+            id: "py-103",
+            title: "103 - Virtual Environment (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/a7ad900b-84a3-4caf-9ea5-3ff6053a7ee8/103_python-103.mp4"
+          },
+          {
+            id: "py-104",
+            title: "104 - Types of errors in Python",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/e8f942bd-0d1a-4d2e-bcdd-a1d9bf389a1f/104_python-104.mp4"
+          },
+          {
+            id: "py-105",
+            title: "105 - Exception Handling (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/87ce6028-3926-4e5f-9494-6ea6568dd689/105_python-105.mp4"
+          },
+          {
+            id: "py-106",
+            title: "106 - Exception Handling(try...except)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/6dbf65e1-d5a3-4515-ab60-bb6e6abef6c5/106_python-106.mp4"
+          },
+          {
+            id: "py-107",
+            title: "107 - End of the Beginner section and start of the advanced section",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/5bcabd7b-f12e-4697-b5d3-129363f4f252/107_python-107.mp4"
           }
         ]
       },
