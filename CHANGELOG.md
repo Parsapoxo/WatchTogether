@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.5.0]
+
+### Added
+- Three new quick reactions in the watch page player: 🔥, 💡 and 💀 (next to 👍 😂 ❤️ 😮). They float over the video for both viewers, like the existing reactions.
+
 ## [3.4.0]
 
 ### Added
