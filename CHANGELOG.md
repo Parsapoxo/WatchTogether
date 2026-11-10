@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.5.2]
+
+### Fixed
+- After coming back from an episode, the address bar kept `?video=...` even after you went back to the Home page, so refreshing the site jumped straight into that episode's section again. The link part is now removed from the address once the page has used it, so a refresh always shows the page you are looking at (Home stays Home).
+
 ## [3.5.1]
 
 ### Fixed

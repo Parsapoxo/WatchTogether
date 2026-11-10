@@ -164,6 +164,11 @@
     const params = new URLSearchParams(window.location.search);
     const urlVideoId = params.get("video");
     if (urlVideoId) viewHome.hidden = true; // we'll jump straight into the right section
+    if (urlVideoId) {
+      // The ?video= link only means "jump to this episode's section once".
+      // Remove it so that going Home and refreshing shows the home page.
+      try { history.replaceState(null, "", window.location.pathname); } catch (e) {}
+    }
 
     let progressMap = {};
     let currentCourse = null;
