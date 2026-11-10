@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.5.1]
+
+### Fixed
+- The chat message box showed a small scrollbar with up/down arrows on its right side. The placeholder text was too long for the box, wrapped to a second line and made the box scrollable. The placeholder is now short ("Type a message…", with the Enter / Shift+Enter hint as a tooltip), and the scrollbar only appears when the typed text grows past the maximum height of the box.
+
 ## [3.5.0]
 
 ### Added

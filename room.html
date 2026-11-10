@@ -89,7 +89,7 @@
           <div class="chat-header">Chat</div>
           <div class="chat-messages" id="chatMessages"></div>
           <form class="chat-input-row" id="chatForm">
-            <textarea id="chatInput" rows="1" placeholder="Type a message (Shift+Enter for a new line)" maxlength="2000"></textarea>
+            <textarea id="chatInput" rows="1" placeholder="Type a message…" title="Enter to send, Shift+Enter for a new line" maxlength="2000"></textarea>
             <button type="submit" class="btn btn-primary chat-send-btn">Send</button>
           </form>
         </div>
@@ -368,6 +368,7 @@
     chatInput.addEventListener("input", () => {
       chatInput.style.height = "auto";
       chatInput.style.height = Math.min(chatInput.scrollHeight, 140) + "px";
+      chatInput.style.overflowY = chatInput.scrollHeight > 140 ? "auto" : "hidden";
     });
 
     chatForm.addEventListener("submit", (e) => {
