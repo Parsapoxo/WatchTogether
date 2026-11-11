@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.6.0]
+
+### Added
+- Python → Beginner episodes 3 to 37 (35 episodes, from "Working with VS Code and a few important points" through to "Python While Loop (Part 2)"), with their video links taken from the course document. Titles are written as in the document, with the number added in front (e.g. "3 - ...") like the other episodes. Every episode keeps the id pattern `py-<number>`. The Python Beginner section is now complete (107 of 107 episodes).
+
 ## [3.5.2]
 
 ### Fixed

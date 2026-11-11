@@ -46,6 +46,181 @@ const COURSES = [
             url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/344ff03e-8940-4053-b288-fca71280a97d/2_vscode_installation.mp4"
           },
           {
+            id: "py-3",
+            title: "3 - Working with VS Code and a few important points",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/7274d0b0-db7f-4712-b56c-afbfbb90be74/3_VScodeGuidance.mp4"
+          },
+          {
+            id: "py-4",
+            title: "4 - Executing the first Python command",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/5b825411-a64e-4f34-b116-77c453eab4af/4_FirstCodeinPython.mp4"
+          },
+          {
+            id: "py-5",
+            title: "5 - Data Types in Python",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/dbe6c6de-f22a-4a5a-b1e2-34b7f13a434a/5_DataTypesinPython.mp4"
+          },
+          {
+            id: "py-6",
+            title: "6 - Operators in Python",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/4e73716e-76a4-41db-bfcc-22af3aa6c463/6_OperatorsinPython.mp4"
+          },
+          {
+            id: "py-7",
+            title: "7 - Variables in Python",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/7e63e04c-0a71-4ff6-b4b5-9f7acd1f4c7d/7_pythonvariables.mp4"
+          },
+          {
+            id: "py-8",
+            title: "8 - Casting in Python",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/c546aa75-1d16-4682-9229-c65cbb67ba4f/8_pythoncasting.mp4"
+          },
+          {
+            id: "py-9",
+            title: "9 - Strings in Python (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/ebb6e36d-7143-438e-8fb9-9a2aa505d84a/9_pythonstrings.mp4"
+          },
+          {
+            id: "py-10",
+            title: "10 - Strings in Python (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/322b3b1d-994a-41d6-8c05-6d288199fea1/10_SlicingStrings.mp4"
+          },
+          {
+            id: "py-11",
+            title: "11 - Concatenating Strings",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/eede9dc1-0647-4151-8cb2-e95e8221f26a/11_pythonconcatenate.mp4"
+          },
+          {
+            id: "py-12",
+            title: "12 - String Methods",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/549cd41c-4961-46aa-98de-d63796c018ae/12_StringMethods.mp4"
+          },
+          {
+            id: "py-13",
+            title: "13 - Python Booleans",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/886b7c92-39b0-4093-a4b2-e482e3d2de35/13_PythonBooleans.mp4"
+          },
+          {
+            id: "py-14",
+            title: "14 - Reviewing and executing a project (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/fb8dd328-3a22-465c-96c6-733f0ed3b808/14_review(1).mp4"
+          },
+          {
+            id: "py-15",
+            title: "15 - Reviewing and executing a project (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/21928151-7529-46f9-92c9-c921ba63b358/15_review(2).mp4"
+          },
+          {
+            id: "py-16",
+            title: "16 - Lists in Python (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/56723aea-fbc7-4fe6-af56-22033f70e077/16_PythonLists(1).mp4"
+          },
+          {
+            id: "py-17",
+            title: "17 - Lists in Python (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/44307180-5b0a-438e-b04d-a68f612d226d/17_PythonLists(2).mp4"
+          },
+          {
+            id: "py-18",
+            title: "18 - Lists in Python (Part 3)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/3b799a9c-ca26-4706-86e0-21e97bd87bc0/18_PythonLists(3).mp4"
+          },
+          {
+            id: "py-19",
+            title: "19 - Lists in Python (Part 4)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/3e5885db-9af5-4791-8cd0-7dd35d1fe9ac/19_PythonLists(4).mp4"
+          },
+          {
+            id: "py-20",
+            title: "20 - Lists in Python (Part 5)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/1f65e7d8-f35c-405d-8038-b34f338f53ff/20_addlistitems.mp4"
+          },
+          {
+            id: "py-21",
+            title: "21 - Lists in Python (Part 6)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/ad8f0a2a-389c-4e2a-a0c9-0bb12cee6269/21_removelistitems.mp4"
+          },
+          {
+            id: "py-22",
+            title: "22 - Lists in Python (Part 7)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/e4dab438-4f93-4992-b928-dbd8c1b378e0/22_PythonLists(7).mp4"
+          },
+          {
+            id: "py-23",
+            title: "23 - Lists in Python (Part 8)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/38eaef4c-d6d9-40a1-ada5-396de9683be0/23_PythonLists(8).mp4"
+          },
+          {
+            id: "py-24",
+            title: "24 - Python Tuples",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/bd07fc1c-8ef6-48ec-91cf-9747f1d0c47a/24_PythonTuples.mp4"
+          },
+          {
+            id: "py-25",
+            title: "25 - Python Sets (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/4783dc10-34dd-4984-bd9d-ca1709d0924d/25_PythonSets(1).mp4"
+          },
+          {
+            id: "py-26",
+            title: "26 - Python Sets (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/bc56746f-83f0-4651-aff0-8ad7fdf30c54/26_PythonSets(2).mp4"
+          },
+          {
+            id: "py-27",
+            title: "27 - Python Sets (Part 3)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/c64fd92f-d64a-43b6-8119-a0e69c1f5c44/27_PythonSets(3).mp4"
+          },
+          {
+            id: "py-28",
+            title: "28 - Python Dictionaries (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/a9d616de-a4ba-40f0-acaa-ae3186140a46/28_PythonDictionaries(1).mp4"
+          },
+          {
+            id: "py-29",
+            title: "29 - Python Dictionaries (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/d8e72886-a2b8-4556-8cb6-9155def37f71/29_PythonDictionaries(2).mp4"
+          },
+          {
+            id: "py-30",
+            title: "30 - Python Dictionaries (Part 3)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/f87cb3e3-d42e-4b78-8c58-95eb082834b8/30_PythonDictionaries(changeandadditems).mp4"
+          },
+          {
+            id: "py-31",
+            title: "31 - Python Dictionaries (Part 4)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/67329b25-a32a-45fd-bf89-a746d73b6fae/31_PythonDictionaries(RemoveItems).mp4"
+          },
+          {
+            id: "py-32",
+            title: "32 - Python Dictionaries (Part 5)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/33487be7-8e93-4a13-a066-0bdc63f66c8a/32_PythonDictionaries(copyandnestedDictionaries).mp4"
+          },
+          {
+            id: "py-33",
+            title: "33 - Python Conditions (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/6e18658d-eccd-4706-af2c-723c54acd270/33_PythonConditions(1).mp4"
+          },
+          {
+            id: "py-34",
+            title: "34 - Python Conditions (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/f92e4f50-1e94-43cb-8f24-451c6f4c0f6c/34_PythonConditions(2).mp4"
+          },
+          {
+            id: "py-35",
+            title: "35 - Python Conditions (Part 3)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/7fd38eaf-2a44-4a5f-a960-86d87a201d95/35_pythonconditions(3).mp4"
+          },
+          {
+            id: "py-36",
+            title: "36 - Python While Loop (Part 1)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/2bb277bd-e77f-44e3-905f-bad9d67749b4/36_pythonwhileloop(1).mp4"
+          },
+          {
+            id: "py-37",
+            title: "37 - Python While Loop (Part 2)",
+            url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/2f93a571-bdce-4bf5-ac1d-0e5249d7bc68/37_pythonwhileloop(2).mp4"
+          },
+          {
             id: "py-38",
             title: "38 - Training (Part 1)",
             url: "https://dl.codeyad.com/videos/Courses/00b22ad1-7db1-4bf7-9125-075b7bdf2ccf/Episodes/cfd69fc5-5dcb-4cf1-bc94-74086006a305/38_python(38).mp4"
