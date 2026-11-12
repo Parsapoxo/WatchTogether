@@ -69,8 +69,14 @@
       <div class="block-title rise" style="--d:.45s">
         <h2>Courses</h2>
         <span>Pick one to browse its sections</span>
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="globalSearch" type="text" placeholder="Search all episodes" aria-label="Search all episodes" autocomplete="off" />
+        </label>
       </div>
       <div class="sections-grid" id="coursesGrid"></div>
+      <div class="eps-grid" id="globalResults" hidden></div>
+      <div class="empty-state" id="globalNoResults" hidden>No episodes match your search.</div>
     </section>
 
     <section id="viewCourse" hidden>
@@ -151,6 +157,9 @@
     const epsGrid = $("epsGrid");
     const noResults = $("noResults");
     const episodeSearch = $("episodeSearch");
+    const globalSearch = $("globalSearch");
+    const globalResults = $("globalResults");
+    const globalNoResults = $("globalNoResults");
     const startBar = $("startBar");
     const startBarTitle = $("startBarTitle");
 
@@ -406,9 +415,84 @@
       currentCourse = null;
       currentSection = null;
       startBar.hidden = true;
+      globalSearch.value = "";
+      renderGlobalSearch();
       showOnly(viewHome);
       buildHome();
     }
+
+    // ---------- home: search across every course ----------
+
+    const GLOBAL_RESULT_LIMIT = 60;
+
+    function globalMatches(q) {
+      const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+      return VIDEO_LIST.filter((v) => {
+        const course = COURSE_BY_ID[v.course];
+        const section = SECTION_BY_ID[v.section];
+        const hay = (episodeNumber(v) + " " + v.title + " " + (course ? course.title : "") + " " + (section ? section.title : "")).toLowerCase();
+        return terms.every((t) => hay.includes(t));
+      });
+    }
+
+    function renderGlobalSearch() {
+      const q = globalSearch.value.trim();
+      const searching = q !== "";
+      coursesGrid.hidden = searching;
+      globalResults.hidden = !searching;
+      globalResults.innerHTML = "";
+      globalNoResults.hidden = true;
+      if (!searching) return;
+
+      const matches = globalMatches(q);
+      if (matches.length === 0) {
+        globalResults.hidden = true;
+        globalNoResults.hidden = false;
+        return;
+      }
+
+      matches.slice(0, GLOBAL_RESULT_LIMIT).forEach((v) => {
+        const pct = pctOf(v.id);
+        const course = COURSE_BY_ID[v.course];
+        const section = SECTION_BY_ID[v.section];
+
+        const card = el("button", "ep-card" + (isDone(v.id) ? " done" : ""));
+        card.type = "button";
+
+        const top = el("div", "ep-top");
+        top.append(el("div", "ep-num", episodeNumber(v)));
+
+        const titleWrap = el("div", "ep-title-wrap");
+        titleWrap.append(el("div", "ep-title", episodeName(v)));
+        titleWrap.append(el("div", "ep-where", (course ? course.title : "") + (section ? " · " + section.title : "")));
+        top.append(titleWrap);
+        top.append(el("span", "ep-pct", pct + "%"));
+
+        const track = el("div", "ep-track");
+        const fill = el("div", "ep-fill");
+        fill.style.width = pct + "%";
+        track.append(fill);
+
+        card.append(top, track);
+        card.addEventListener("click", () => openSection(v.section, v.id));
+        globalResults.append(card);
+      });
+
+      if (matches.length > GLOBAL_RESULT_LIMIT) {
+        globalResults.append(el("div", "ep-more", "Showing the first " + GLOBAL_RESULT_LIMIT + " of " + matches.length + " matches — type more to narrow it down."));
+      }
+    }
+
+    globalSearch.addEventListener("input", renderGlobalSearch);
+    globalSearch.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        globalSearch.value = "";
+        renderGlobalSearch();
+      } else if (e.key === "Enter") {
+        const first = globalResults.querySelector(".ep-card");
+        if (first) first.click();
+      }
+    });
 
     // ---------- a course: its sections ----------
 

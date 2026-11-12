@@ -75,6 +75,11 @@
                   <button type="button" class="vplayer-reaction-btn" data-emoji="💀">💀</button>
                 </div>
 
+                <div class="vplayer-speed" id="speedWrap">
+                  <button type="button" class="vplayer-speed-btn" id="speedBtn" title="Playback speed">1x</button>
+                  <div class="vplayer-speed-menu" id="speedMenu" hidden></div>
+                </div>
+
                 <button class="vplayer-btn" id="muteBtn" title="Mute"></button>
                 <input type="range" id="volumeRange" class="vplayer-volume" min="0" max="1" step="0.05" value="1" />
                 <button class="vplayer-btn" id="fullscreenBtn" title="Fullscreen"></button>
@@ -151,6 +156,8 @@
     const muteBtn = document.getElementById("muteBtn");
     const volumeRange = document.getElementById("volumeRange");
     const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const speedBtn = document.getElementById("speedBtn");
+    const speedMenu = document.getElementById("speedMenu");
 
     playPauseBtn.innerHTML = ICONS.play;
     prevBtn.innerHTML = ICONS.prev;
@@ -282,13 +289,64 @@
       fullscreenBtn.innerHTML = document.fullscreenElement ? ICONS.shrink : ICONS.expand;
     });
 
+    // --- playback speed (shared with your friend, so you stay in sync) ---
+    const SPEEDS = [0.75, 1, 1.25, 1.5, 1.75, 2];
+
+    function speedLabel(rate) {
+      return rate + "x";
+    }
+
+    function paintSpeed() {
+      speedBtn.textContent = speedLabel(player.playbackRate);
+      speedMenu.querySelectorAll("button").forEach((b) => {
+        b.classList.toggle("active", parseFloat(b.dataset.rate) === player.playbackRate);
+      });
+    }
+
+    function closeSpeedMenu() {
+      speedMenu.hidden = true;
+    }
+
+    // fromRemote = true when your friend changed it (so we don't send it back)
+    function setSpeed(rate, fromRemote) {
+      if (!isFinite(rate) || rate < 0.25 || rate > 4) return;
+      if (player.playbackRate === rate) return;
+      player.playbackRate = rate;
+      paintSpeed();
+      if (fromRemote) setStatus("Your friend set the speed to " + speedLabel(rate));
+      else channel.send({ type: "broadcast", event: "rate", payload: { rate: rate } });
+    }
+
+    SPEEDS.forEach((rate) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.rate = rate;
+      b.textContent = speedLabel(rate);
+      b.addEventListener("click", () => {
+        setSpeed(rate, false);
+        closeSpeedMenu();
+      });
+      speedMenu.appendChild(b);
+    });
+    paintSpeed();
+
+    speedBtn.addEventListener("click", () => {
+      speedMenu.hidden = !speedMenu.hidden;
+    });
+    document.addEventListener("click", (e) => {
+      if (!document.getElementById("speedWrap").contains(e.target)) closeSpeedMenu();
+    });
+
     // auto-hide controls while playing and idle
     let idleTimer;
     function showControls() {
       vplayerControls.classList.remove("idle");
       clearTimeout(idleTimer);
       if (!player.paused) {
-        idleTimer = setTimeout(() => vplayerControls.classList.add("idle"), 2600);
+        idleTimer = setTimeout(() => {
+          vplayerControls.classList.add("idle");
+          closeSpeedMenu();
+        }, 2600);
       }
     }
     vplayer.addEventListener("mousemove", showControls);
@@ -445,6 +503,9 @@
         player.currentTime = p.time;
       }
 
+      // same speed as your friend (also covers someone who joined after it was changed)
+      if (typeof p.rate === "number") setSpeed(p.rate, true);
+
       if (p.action === "play") {
         player.play().catch(() => {});
         setStatus("Your friend hit play");
@@ -456,6 +517,10 @@
       }
 
       setTimeout(() => { applyingRemote = false; }, 400);
+    });
+
+    channel.on("broadcast", { event: "rate" }, (msg) => {
+      setSpeed(msg.payload.rate, true);
     });
 
     channel.on("broadcast", { event: "buffering" }, (msg) => {
@@ -534,7 +599,7 @@
       channel.send({
         type: "broadcast",
         event: "playback",
-        payload: { action: action, time: player.currentTime }
+        payload: { action: action, time: player.currentTime, rate: player.playbackRate }
       });
     }
 

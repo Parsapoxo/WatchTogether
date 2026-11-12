@@ -1897,3 +1897,97 @@ select {
     height: 440px;
   }
 }
+
+/* ---------- playback speed menu (watch page) ---------- */
+
+.vplayer-speed {
+  position: relative;
+}
+
+.vplayer-speed-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  height: 30px;
+  min-width: 40px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.vplayer-speed-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.vplayer-speed-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 78px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(16, 24, 43, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.vplayer-speed-menu[hidden] {
+  display: none;
+}
+
+.vplayer-speed-menu button {
+  background: none;
+  border: none;
+  color: #dfe4ee;
+  font: inherit;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.vplayer-speed-menu button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.vplayer-speed-menu button.active {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ---------- home: search across all episodes ---------- */
+
+.block-title .search-box {
+  margin-left: auto;
+  align-self: center;
+}
+
+.ep-where {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.ep-more {
+  grid-column: 1 / -1;
+  padding: 6px 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.block-title {
+  flex-wrap: wrap;
+}

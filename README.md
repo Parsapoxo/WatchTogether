@@ -9,6 +9,8 @@ A site for you and a friend to watch a video at the same time — when one of yo
 - Everything is organised as **Course → Section → Episode** (for example Python → Beginner → 1 - Installing Python). The home page shows the courses (each with its logo and a progress ring), a course opens into its sections, and a section opens into its episodes.
 - To pass playback messages between the two browsers instantly, this uses **Supabase Realtime** — a free service that works from anywhere without a VPN.
 - A small database table stores shared watch progress, so both of you see the same percentage for each episode.
+- The home page has a search box that looks through every episode of every course at once.
+- The player has a playback speed menu (0.75x–2x); the speed is shared, so you both stay in sync.
 - The video player is fully custom-built (no browser default controls), with Previous/Next, quick emoji reactions (👍 😂 ❤️ 😮 🔥 💡 💀), and a chat panel — messages also pop up briefly over the video itself.
 
 ## Step 1: Create a free Supabase project

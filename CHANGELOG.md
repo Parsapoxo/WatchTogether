@@ -8,6 +8,12 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.7.0]
+
+### Added
+- Playback speed on the watch page: a speed button in the player controls (next to the volume) opens a small menu with 0.75x, 1x, 1.25x, 1.5x, 1.75x and 2x. The speed is shared with your friend, so you both stay in sync: when one of you changes it, the other one's player changes too (and a friend who joins later picks it up on your next play, pause or seek). Every episode starts at 1x.
+- Search across all episodes on the home page: a search box next to the "Courses" title looks through every episode of every course at once (by number, title, course or section name; several words must all match). Results show the course and section, plus the progress of each episode; clicking a result opens its section with that episode selected, and Enter opens the first result. Esc or clearing the box brings the courses back. The existing search inside a section is unchanged.
+
 ## [3.6.0]
 
 ### Added
