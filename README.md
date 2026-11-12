@@ -10,6 +10,7 @@ A site for you and a friend to watch a video at the same time — when one of yo
 - To pass playback messages between the two browsers instantly, this uses **Supabase Realtime** — a free service that works from anywhere without a VPN.
 - A small database table stores shared watch progress, so both of you see the same percentage for each episode.
 - The home page has a search box that looks through every episode of every course at once.
+- The site is installable (PWA) and keeps its own files in a cache (`sw.js`, version taken from `APP_VERSION`), so it opens even on a slow or missing connection. Videos and Supabase are never cached.
 - The home page shows when your friend is online, or which episode they are watching, with a Join button (a shared realtime "lobby" channel; nothing is stored).
 - Keyboard shortcuts on the watch page: Space (play/pause), ← / → (5 seconds), F (fullscreen), M (mute).
 - The player has a playback speed menu (0.75x–2x); the speed is shared, so you both stay in sync.
@@ -93,7 +94,7 @@ Everything the site can play is described in `videos.js`, and the comment at the
 
 ## Step 5: Upload to GitHub and turn on GitHub Pages
 
-1. Create a new repository and push all the files in this folder (`index.html`, `room.html`, `style.css`, `common.js`, `videos.js`, `supabase-config.js`, and the `assets` folder with the course logos).
+1. Create a new repository and push all the files in this folder (`index.html`, `room.html`, `style.css`, `common.js`, `videos.js`, `supabase-config.js`, `sw.js`, `manifest.webmanifest`, and the `assets` folder with the course logos and app icons).
 2. Go to the repository's settings → **Pages** → under Branch, pick `main` and `/root`, then Save.
 3. After a few minutes, your site will be live at something like `https://username.github.io/repo-name/`.
 

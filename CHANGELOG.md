@@ -8,6 +8,13 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.10.0]
+
+### Added
+- The site can now be installed as an app (Chrome/Edge: "Install" in the address bar or menu; Android: "Add to Home screen" / "Install app"). It gets its own icon and opens in its own window without the browser bars. New files: `manifest.webmanifest`, `sw.js` and three app icons in `assets/`.
+- The site's files (pages, styles, scripts, logos and the Supabase library) are now kept in a cache by a service worker. When the network is slow (more than 3 seconds) or down, the saved copy is used, so the site still opens. When the network works you always get the newest files. The cache is named after `APP_VERSION`, so each release replaces the old one.
+- Not changed: the videos still need the internet (they are streamed from their own links), and chat, sync, progress and "friend is online" still need Supabase (a VPN in Iran), as before.
+
 ## [3.9.0]
 
 ### Added

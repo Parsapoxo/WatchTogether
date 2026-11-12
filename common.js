@@ -1,6 +1,6 @@
 // Helpers shared between the landing page and the room page
 
-const APP_VERSION = "3.9.0";
+const APP_VERSION = "3.10.0";
 
 let _sbClient = null;
 
@@ -185,7 +185,22 @@ function joinLobby(videoId, onChange) {
   return { announce: announce };
 }
 
+// Makes the site installable and lets it open when the network is slow or gone (see sw.js).
+// The version in the URL gives every release its own cache. Never blocks the page.
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  const secure = location.protocol === "https:" || location.hostname === "localhost";
+  if (!secure) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js?v=" + APP_VERSION).catch((e) => {
+      console.warn("Service worker not registered:", e);
+    });
+  });
+}
+
 function applyVersionBadge() {
   const el = document.getElementById("versionBadge");
   if (el) el.textContent = "v" + APP_VERSION;
 }
+
+registerServiceWorker();
