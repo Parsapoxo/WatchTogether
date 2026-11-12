@@ -59,7 +59,7 @@
               <input type="range" id="seekRange" class="vplayer-seek" min="0" max="100" step="0.01" value="0" />
               <div class="vplayer-row">
                 <button class="vplayer-btn" id="prevBtn" title="Previous episode"></button>
-                <button class="vplayer-btn" id="playPauseBtn" title="Play/Pause"></button>
+                <button class="vplayer-btn" id="playPauseBtn" title="Play/Pause (Space)"></button>
                 <button class="vplayer-btn" id="nextBtn" title="Next episode"></button>
                 <span class="vplayer-time" id="vplayerTime">0:00 / 0:00</span>
 
@@ -80,9 +80,9 @@
                   <div class="vplayer-speed-menu" id="speedMenu" hidden></div>
                 </div>
 
-                <button class="vplayer-btn" id="muteBtn" title="Mute"></button>
+                <button class="vplayer-btn" id="muteBtn" title="Mute (M)"></button>
                 <input type="range" id="volumeRange" class="vplayer-volume" min="0" max="1" step="0.05" value="1" />
-                <button class="vplayer-btn" id="fullscreenBtn" title="Fullscreen"></button>
+                <button class="vplayer-btn" id="fullscreenBtn" title="Fullscreen (F)"></button>
               </div>
             </div>
           </div>
@@ -354,6 +354,44 @@
       if (!player.paused) vplayerControls.classList.add("idle");
     });
     showControls();
+
+    // ===================== keyboard shortcuts =====================
+    // Space = play/pause, Left/Right = back/forward 5 seconds, F = fullscreen, M = mute.
+    // Ignored while typing in the chat box (or any text field) and with Ctrl/Alt/Cmd held.
+    const SKIP_SECONDS = 5;
+
+    function isTypingTarget(t) {
+      if (!t || !t.tagName) return false;
+      if (t.isContentEditable) return true;
+      const tag = t.tagName;
+      if (tag === "TEXTAREA" || tag === "SELECT") return true;
+      if (tag === "INPUT") return t.type !== "range" && t.type !== "button" && t.type !== "checkbox";
+      return false;
+    }
+
+    function skipBy(seconds) {
+      if (!isFinite(player.duration)) return;
+      player.currentTime = Math.max(0, Math.min(player.duration, player.currentTime + seconds));
+      showControls();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || isTypingTarget(e.target)) return;
+      const k = e.key;
+      if (k === " " || k === "Spacebar") togglePlay();
+      else if (k === "ArrowLeft") skipBy(-SKIP_SECONDS);
+      else if (k === "ArrowRight") skipBy(SKIP_SECONDS);
+      else if (k === "f" || k === "F") fullscreenBtn.click();
+      else if (k === "m" || k === "M") muteBtn.click();
+      else return;
+      e.preventDefault();
+      showControls();
+    });
+
+    // stop Space from also "clicking" a focused button when it is released
+    document.addEventListener("keyup", (e) => {
+      if ((e.key === " " || e.key === "Spacebar") && !isTypingTarget(e.target)) e.preventDefault();
+    });
 
     // ===================== message bubbles over the video =====================
 

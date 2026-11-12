@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.8.0]
+
+### Added
+- Keyboard shortcuts on the watch page: Space plays/pauses, ← / → go back / forward 5 seconds, F toggles fullscreen and M mutes. They are ignored while you type in the chat box. Play, pause and seeking from the keyboard are shared with your friend exactly like clicking the player. The player buttons' tooltips now mention their key.
+
 ## [3.7.0]
 
 ### Added

@@ -10,6 +10,7 @@ A site for you and a friend to watch a video at the same time — when one of yo
 - To pass playback messages between the two browsers instantly, this uses **Supabase Realtime** — a free service that works from anywhere without a VPN.
 - A small database table stores shared watch progress, so both of you see the same percentage for each episode.
 - The home page has a search box that looks through every episode of every course at once.
+- Keyboard shortcuts on the watch page: Space (play/pause), ← / → (5 seconds), F (fullscreen), M (mute).
 - The player has a playback speed menu (0.75x–2x); the speed is shared, so you both stay in sync.
 - The video player is fully custom-built (no browser default controls), with Previous/Next, quick emoji reactions (👍 😂 ❤️ 😮 🔥 💡 💀), and a chat panel — messages also pop up briefly over the video itself.
 
