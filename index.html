@@ -58,6 +58,8 @@
             <circle class="hl-pulse back" cx="62" cy="35" r="4" fill="#5fb3a3"/>
           </svg>
 
+          <div class="friend-status" id="friendStatus" hidden></div>
+
           <div class="hero-stats rise" style="--d:.38s" id="heroStats"></div>
         </div>
 
@@ -148,6 +150,7 @@
     const coursesGrid = $("coursesGrid");
     const sectionsGrid = $("sectionsGrid");
     const heroStats = $("heroStats");
+    const friendStatus = $("friendStatus");
     const courseLogoSlot = $("courseLogoSlot");
     const courseTitle = $("courseTitle");
     const courseMeta = $("courseMeta");
@@ -294,7 +297,10 @@
     nameInput.addEventListener("input", updateGreeting);
     nameInput.addEventListener("change", () => {
       const n = nameInput.value.trim();
-      if (n) setMyName(n);
+      if (n) {
+        setMyName(n);
+        if (lobby) lobby.announce();
+      }
     });
     updateGreeting();
 
@@ -633,6 +639,30 @@
     $("startSelectedBtn").addEventListener("click", () => {
       if (selectedVideoId) startEpisode(selectedVideoId);
     });
+
+    // ---------- who else is here right now ----------
+
+    function renderFriendStatus(others) {
+      friendStatus.innerHTML = "";
+      friendStatus.hidden = others.length === 0;
+      others.forEach((p) => {
+        const v = p.videoId ? VIDEO_LIST.find((x) => x.id === p.videoId) : null;
+        const row = el("div", "friend-row");
+        row.append(el("span", "friend-dot"));
+        row.append(el("span", "friend-text", v
+          ? p.name + " is watching " + episodeNumber(v) + " · " + episodeName(v)
+          : p.name + " is online"));
+        if (v) {
+          const join = el("button", "friend-join", "Join");
+          join.type = "button";
+          join.addEventListener("click", () => startEpisode(v.id));
+          row.append(join);
+        }
+        friendStatus.append(row);
+      });
+    }
+
+    const lobby = joinLobby(null, renderFriendStatus);
 
     // ---------- boot ----------
 

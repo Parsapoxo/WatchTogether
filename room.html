@@ -526,6 +526,9 @@
       }
     }) : offlineChannel;
 
+    // let the home page show your friend what you are watching
+    joinLobby(video.id);
+
     let syncOffline = false;
     if (!sb) {
       syncOffline = true;

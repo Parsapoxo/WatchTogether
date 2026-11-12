@@ -1,6 +1,6 @@
 // Helpers shared between the landing page and the room page
 
-const APP_VERSION = "3.8.0";
+const APP_VERSION = "3.9.0";
 
 let _sbClient = null;
 
@@ -137,6 +137,52 @@ async function sendChatMessage(videoId, senderId, name, body) {
   } catch (e) {
     console.error("Couldn't send chat message:", e);
   }
+}
+
+// --- who is online: everyone on the site (any page) shares one "lobby" channel ---
+// Nothing is stored in the database; it only exists while people have the site open.
+// videoId = the episode you are watching, or null when you are just browsing.
+// onChange(others) is called with the other people there: [{ id, name, videoId }].
+// Returns null when the Supabase library isn't available (then nothing is shown).
+function joinLobby(videoId, onChange) {
+  const sb = initSupabase();
+  if (!sb) return null;
+  const myId = getMyClientId();
+  let channel;
+  let subscribed = false;
+  try {
+    channel = sb.channel("lobby", { config: { presence: { key: myId } } });
+    if (onChange) {
+      channel.on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState();
+        const others = Object.keys(state)
+          .filter((id) => id !== myId && state[id].length > 0)
+          .map((id) => {
+            const meta = state[id][state[id].length - 1];
+            return { id: id, name: meta.name || "", videoId: meta.videoId || null };
+          })
+          .filter((p) => p.name);
+        onChange(others);
+      });
+    }
+    channel.subscribe((status) => {
+      if (status === "SUBSCRIBED") {
+        subscribed = true;
+        announce();
+      }
+    });
+  } catch (e) {
+    console.error("Couldn't join the lobby:", e);
+    return null;
+  }
+
+  // tell the others who you are (needs a name; call again after the name changes)
+  function announce() {
+    const name = getMyName();
+    if (!subscribed || !name) return;
+    Promise.resolve(channel.track({ name: name, videoId: videoId || null })).catch(() => {});
+  }
+  return { announce: announce };
 }
 
 function applyVersionBadge() {

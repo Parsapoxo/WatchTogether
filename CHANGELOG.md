@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.9.0]
+
+### Added
+- On the home page, a teal pill under the greeting now shows when your friend is on the site: "Ali is online" while they browse, or "Ali is watching 42 · Training (Part 3)" with a **Join** button that takes you straight to that episode. It appears only while they have the site open and disappears when they leave. This uses a new shared realtime "lobby" channel (every page you open joins it); nothing is stored in the database, and nothing changes if the realtime service can't be reached (the pill just never shows).
+
 ## [3.8.0]
 
 ### Added
