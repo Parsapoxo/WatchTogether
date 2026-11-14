@@ -403,7 +403,7 @@
       nameEl.className = "video-msg-name";
       nameEl.textContent = name + ":";
       el.appendChild(nameEl);
-      el.appendChild(document.createTextNode(" " + body));
+      el.appendChild(document.createTextNode(" " + (gifFromBody(body) ? "sent a GIF 🎞️" : body)));
       videoMsgStack.appendChild(el);
       setTimeout(() => {
         el.classList.add("leaving");
@@ -420,6 +420,16 @@
       }
     }
 
+    // GIFs travel as a normal chat message whose body is "[gif]" + an https URL
+    // (or a small data: URL when pasted from the Windows Win+. picker), so no database change is needed.
+    const GIF_PREFIX = "[gif]";
+    const GIF_MAX_BYTES = 140 * 1024; // stays under the realtime message size limit
+    function gifFromBody(body) {
+      if (typeof body !== "string" || body.indexOf(GIF_PREFIX) !== 0) return null;
+      const u = body.slice(GIF_PREFIX.length).trim();
+      return /^(https:\/\/\S+|data:image\/(gif|webp);base64,[A-Za-z0-9+\/=]+)$/.test(u) ? u : null;
+    }
+
     function renderChatMessage(msg, isMine) {
       const wasAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 40;
 
@@ -433,7 +443,22 @@
 
       const body = document.createElement("div");
       body.className = "chat-msg-body";
-      body.textContent = msg.body;
+      const gifUrl = gifFromBody(msg.body);
+      if (gifUrl) {
+        const img = document.createElement("img");
+        img.className = "chat-gif";
+        img.alt = "GIF";
+        img.loading = "lazy";
+        img.referrerPolicy = "no-referrer";
+        img.src = gifUrl;
+        img.addEventListener("load", () => {
+          if (wasAtBottom) chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+        body.classList.add("chat-msg-gif");
+        body.appendChild(img);
+      } else {
+        body.textContent = msg.body;
+      }
 
       wrap.appendChild(meta);
       wrap.appendChild(body);
@@ -468,13 +493,7 @@
       chatInput.style.overflowY = chatInput.scrollHeight > 140 ? "auto" : "hidden";
     });
 
-    chatForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const text = chatInput.value.trim();
-      if (!text) return;
-      chatInput.value = "";
-      chatInput.style.height = "auto";
-
+    function postChatBody(text) {
       const emptyEl = document.getElementById("chatEmpty");
       if (emptyEl) emptyEl.remove();
 
@@ -483,6 +502,48 @@
       showVideoMessage(msg.name, msg.body);
       channel.send({ type: "broadcast", event: "chat", payload: msg });
       sendChatMessage(video.id, myClientId, myName, text);
+    }
+
+    chatForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+      chatInput.value = "";
+      chatInput.style.height = "auto";
+      postChatBody(text);
+    });
+
+    // Paste a GIF into the chat (e.g. from the Windows Win+. GIF picker) to send it
+    chatInput.addEventListener("paste", (e) => {
+      const cd = e.clipboardData;
+      if (!cd) return;
+
+      const file = Array.from(cd.files || []).find((f) => /^image\/(gif|webp)$/.test(f.type));
+      if (file) {
+        e.preventDefault();
+        if (file.size > GIF_MAX_BYTES) {
+          showToast("That GIF is too big to send (max " + Math.round(GIF_MAX_BYTES / 1024) + " KB)");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => postChatBody(GIF_PREFIX + reader.result);
+        reader.onerror = () => showToast("Couldn't read that GIF");
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      // Some pickers paste a link or an <img> instead of a file
+      const html = cd.getData("text/html") || "";
+      const text = (cd.getData("text/plain") || "").trim();
+      const gifHost = /\.gif(\?|#|$)|\/\/(media[0-9]*\.)?(tenor|giphy)\.com\//i;
+      let url = null;
+      const m = html.match(/<img[^>]+src=["'](https:\/\/[^"']+)["']/i);
+      if (m && gifHost.test(m[1])) url = m[1].replace(/&amp;/g, "&");
+      else if (/^https:\/\/\S+$/.test(text) && gifHost.test(text)) url = text;
+      if (url) {
+        e.preventDefault();
+        postChatBody(GIF_PREFIX + url);
+      }
     });
 
     // Previous/Next walk through the episodes of this course (across its sections),

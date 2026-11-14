@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.11.0]
+
+### Added
+- You can now send GIFs in the chat. Click the chat box, press **Win + .** (Windows emoji panel), open the GIF tab and pick one: it is sent as a picture that both of you see in the chat (the video shows "sent a GIF"). Copying a GIF or a GIF link (Tenor/Giphy or ending in `.gif`) and pasting it into the chat box works too. GIFs pasted as a file are limited to 140 KB; bigger ones show a notice. No database change is needed.
+
 ## [3.10.1]
 
 ### Fixed

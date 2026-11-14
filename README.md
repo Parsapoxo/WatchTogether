@@ -14,7 +14,7 @@ A site for you and a friend to watch a video at the same time — when one of yo
 - The home page shows when your friend is online, or which episode they are watching, with a Join button (a shared realtime "lobby" channel; nothing is stored).
 - Keyboard shortcuts on the watch page: Space (play/pause), ← / → (5 seconds), F (fullscreen), M (mute).
 - The player has a playback speed menu (0.75x–2x); the speed is shared, so you both stay in sync.
-- The video player is fully custom-built (no browser default controls), with Previous/Next, quick emoji reactions (👍 😂 ❤️ 😮 🔥 💡 💀), and a chat panel — messages also pop up briefly over the video itself.
+- The video player is fully custom-built (no browser default controls), with Previous/Next, quick emoji reactions (👍 😂 ❤️ 😮 🔥 💡 💀), and a chat panel — messages also pop up briefly over the video itself. GIFs can be sent in the chat (press Win + . and pick a GIF, or paste a GIF / GIF link).
 
 ## Step 1: Create a free Supabase project
 
@@ -103,7 +103,7 @@ Everything the site can play is described in `videos.js`, and the comment at the
 1. Open the site and enter your name (top corner). Click "Continue" to jump straight to your next episode, or pick a course, then a section, then an episode from its list, and click "Start watching".
 2. You're taken straight to that episode's watch page. If your friend opens the site and picks the same episode (or opens the "Copy episode link" you send them), you'll both land in the same space and stay in sync — play, pause, and seek follow each other.
 3. Inside the watch page, "Previous"/"Next" (in the player's control bar) moves *you* to the next episode, without affecting your friend if they're somewhere else — just like switching voice channels.
-4. Use the chat sidebar next to the video, or the quick emoji reactions (👍 😂 ❤️ 😮 🔥 💡 💀) in the player, to react in real time — chat messages also pop up briefly over the video itself.
+4. Use the chat sidebar next to the video, or the quick emoji reactions (👍 😂 ❤️ 😮 🔥 💡 💀) in the player, to react in real time — chat messages also pop up briefly over the video itself. To send a GIF, click the chat box, press Win + . (Windows) and pick one from the GIF tab; pasting a GIF or a Tenor/Giphy link works too.
 
 ## Versioning
 

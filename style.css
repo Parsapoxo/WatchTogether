@@ -2072,3 +2072,16 @@ a.room-brand:focus-visible {
 .friend-join:hover {
   filter: brightness(1.1);
 }
+
+/* GIFs pasted into the chat */
+.chat-msg .chat-msg-body.chat-msg-gif {
+  padding: 4px;
+  background: transparent;
+  border-color: transparent;
+}
+.chat-gif {
+  display: block;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 12px;
+}
