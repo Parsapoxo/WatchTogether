@@ -8,6 +8,11 @@ This project follows **Semantic Versioning**: version numbers look like `MAJOR.M
 
 The current version number lives in `common.js` (the `APP_VERSION` variable) and is shown in the corner of the site, next to the "Together" name.
 
+## [3.10.1]
+
+### Fixed
+- The "Together" name and the two lamps in the top-left corner are now a link to the home page, on both the home page and the watch page. Click it from inside a room to jump straight back to the home page.
+
 ## [3.10.0]
 
 ### Added
